@@ -11,6 +11,6 @@ La mayoria están escritos para [NodeHispano](http://nodehispano.com), otros par
 
 # Licencia
 
-[![alt text](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)]("http://creativecommons.org/licenses/by-nc-sa/3.0/" "creative commons")
+[![alt text](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/3.0/ "creative commons")
 
-Los Articulos por [Alejandro Morales]("http://github.com/alejandromg") se encuentra bajo una Licencia [Creative Commons Atribución-NoComercial-CompartirIgual 3.0 Unported]("http://creativecommons.org/licenses/by-nc-sa/3.0/")
+Los Articulos por [Alejandro Morales](http://github.com/alejandromg) se encuentra bajo una Licencia [Creative Commons Atribución-NoComercial-CompartirIgual 3.0 Unported](http://creativecommons.org/licenses/by-nc-sa/3.0/)
