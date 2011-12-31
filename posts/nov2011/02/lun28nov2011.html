@@ -1,0 +1,137 @@
+<h2>Publicando tu aplicación</h2>
+
+<p>Una vez escritas tus aplicaciones, el siguiente paso,  es buscar <em>hosting</em>. Recuerdo hace unos cuantos meses cuan díficil era conseguir un servicio de hosting que soportara node.js, mucho menos uno que lo ofreciera de manera gratuita, particularmente tarde en conseguir una invitación para <a href="http://nodester.com">Nodester</a> como un mes en <a href="http://nodejitsu.com">nodejitsu</a> otros 2 meses y así. Actualmente todo este tema esta bastante maduro, y ahora hay algunos que lo único que ocupas es instalar las herramientas para la consola y ya estas listo. </p>
+
+<p>En estos días, hay empresas que se dedican solo a ofrecer servicios para node.js, lo cual esta bastante bien mientras hay otras cuantas que ofrecen el servicio como parte de su <em>stack</em>. En este post veremos algunos de ellos y como funcionan. Si no te interesa un servicio de terceros y prefieres alojar tu propio servicio <a href="http://dailyjs.com/2010/03/15/hosting-nodejs-apps/">ve</a> <a href="http://blog.nodejitsu.com/nodejs-cloud-server-in-three-minutes" title="En un futuro hablare de esto">aqui</a>.</p>
+
+<p>Para mantener un orden, tratare de listar cada una de los sitios que ofrecen este servicio (sin ningún orden, bueno los que solo ofrecen node.js hosting primero):</p>
+
+<ul><li><a href="http://nodejitsu.com">nodejitsu</a>: <a href="http://github.com/nodejitsu">Open Source</a></li><li><a href="http://nodester.com">Nodester</a>: <a href="http://github.com/nodester">Open Source</a></li><li><a href="http://cloudno.de">cloudno.de</a>: Basado en Nodester</li><li><a href="http://no.de">no.de</a> &lt;- El mantainer es <a href="http://joyent.com" title="node.js financieros">Joyent</a>.</li><li><a href="http://dotcloud.com">dotcloud</a>: Tiene casi de todo <a href="http://couchdb.org">CouchDB</a>, <a href="http://redis.io">redis</a>, <a href="http://mongodb.org">mongodb</a> y contando. (es una buena opción)</li><li><a href="http://beje.us">beje.us</a>: Basado en Nodester (si, tambien)</li><li><a href="http://nodesocket.com">nodeSocket</a></li><li><a href="http://cloudfoundry.com">cloudfoundry</a>: aparte ofrece Rails, Spring y Scala. (díficil de conseguir una cuenta)</li><li><a href="http://c9.io">cloud9ide</a>: Más que todo para desarrollo.</li><li><a href="http://heroku.com">heroku</a>: De este no hay mucho que decir ;)</li><li><a href="http://engineyard.com">Engine Yard</a>: Recientemente agrego soporte para <a href="http://nodejs.org" title="nodejs">node</a> y aparte ofrece 500 hrs grátis.</li><li><a href="http://jsapp.us">jsapp.us</a>: una sandbox para probar aplicaciones como cloud9</li><li><a href="http://wilbur.io">wilbur</a>: Basado en cloudfoundry y no ocupas invitación.</li></ul>
+
+<p>Es una lista larga. Asi que no hay excusa para que no empieces a usar <a href="http://nodejs.org" title="nodejs">node.js</a> pues como mencione en el artículo anterior, la comunidad
+esta bastante preocupada en ofrecer lo mejor para todos, y pues todos los servicios listados anteriormente son bastante eficientes. Yo les voy a hablar de los que son Open Source pues bien merecido se lo tienen.</p>
+
+<h2><a href="http://nodester.com">Nodester</a></h2>
+
+<p><img alt="alt text" src="http://nodester.com/images/nodesterrocketlogo.jpg"></img></p>
+
+<p>Empezare con nodester pues fue de los primeros (o él primero) en ofrecer hosting de manera gratuita. En uno de los videos se explica que la principal razón por lo que lo hacian de gratis es porque no habia ningún otro servicio que lo ofreciera. Tienen como fílosofia PaaS (Plataforma como Servicio). Aparte tiene como respaldo los servidores de Amazon y Rackspace, además implementa una RESTful API diseñada para no utilizar VPSs.</p>
+
+<p>Para empezar a usar a nodester ocupas, tener instalado <a href="," title="sudo apt-get install curl">curl</a>: * Muchos de los pasos funcionan para cloudno.de, beje.us.</p>
+
+<pre><code>curl -X POST -d &quot;email=correo@electronico.com&quot; http://nodester.com/coupon</code></pre>
+
+<p>Cruza los dedos y espera por tu cupon, ellos semanalmente (a veces hasta 3 veces por semana), envian cupones a todos los que estan en la lista de espera. Si quieres acelerar el proceso escribles un twitt a <a href="http://nodester.com">@nodester</a>.</p>
+
+<p>Una vez aceptado, instala las herramientas de consola:</p>
+
+<pre><code>&gt; npm install -g nodester-cli
+&gt; nodester user setup USUARIO PASSWORD
+&gt; nodester user setkey ARCHIVO.PEM</code></pre>
+
+<p>Y crea tu aplicación:</p>
+
+<pre><code>&gt; nodester app create APPNOMBRE SERVER.js
+// donde SERVER.js es tu archivo con el que inicia la aplicación.</code></pre>
+
+<p>Debo de aceptar que es de las APIs más fáciles de utilizar, además esta basada en git, lo cual es de gran ayuda.</p>
+
+<pre><code>&gt; nodester app create myapp
+&gt; nodester app info myapp
+&gt; git remote add nodester LA_URL_QUE_VIENE_DE_APP_INFO_ 
+// y luego simplemente haz un push:
+&gt; git push nodester master</code></pre>
+
+<p>Ve a http://myapp.nodester.com y podras ver tu aplicación ya en nodester. Puedes encontrar más información en la <a href="http://nodester.com/api.html">documentación</a> de nodester.</p>
+
+<h2><a href="http://nodejitsu.com">nodejistu</a></h2>
+
+<p><img alt="alt text" title="logo" src="http://blog.nodejitsu.com/img/header.png"></img></p>
+
+<p>Tienen como filosofia SaaS (Software como servicio) y el <em><a href="http://github.com/hookio" title="hook.io">Open</a> <a href="http://github.com/nodejistu" title="Nodejitsu en github">Source</a></em>, además proveen bases de datos noSQL como: &quot;couchdb&quot;, &quot;mongodb&quot;, &quot;redis&quot; a través de <a href="http://iriscouch.com" title="irish couch">los</a> <a href="http://mongohq.com" title="mongohq">principales</a> <a href="http://redistogo.com" title="redis to go">proveedores</a>.</p>
+
+<p>La forma más fácil de iniciar con <a href="http://nodejitsu">nodejistu</a> es a través de <code>telnet</code> o <code>nc</code>:</p>
+
+<pre><code>&gt; telnet nodejitsu.com
+// ó 
+&gt; nc jitsu.com 23</code></pre>
+
+<p>Ambos métodos son bien funcionales, ya que nodejistu esta en <em>&quot;extended private beta&quot;</em> ocupas un poquito de suerte para lograr entrar, pero si eres bueno con él IRC entra a freenode y unete a el canal de nodejitsu :: #nodejistu y pide por ella (así consegui el mio). <em>Update:</em> Al parecer por los momentos no estan ofreciendo invitaciones pero si en los próximos dias. Esten atentos.</p>
+
+<p>Bueno una vez que ya estas dentro lo que puedes hacer es bien simple:</p>
+
+<pre><code>&gt; npm install jitsu -g
+&gt; jistu login // El clásico auth
+&gt; jitsu deploy // en el folder de tu aplicación.
+// Listo</code></pre>
+
+<p>Super fácil, ¿eh? Claro durante cada uno de los pasos te piden información acerca del nombre de tu aplicación y otras cosas. De preferencia ten tu propio <code>package.json</code> aquí un <a href="http://blog.nodejitsu.com/package-dependencies-done-right" title="Si es de nodejitsu">artículo</a>   de como construirlo o instalate el <code>require-analyzer</code> con <code> npm install require-analyzer -g</code>.</p>
+
+<p>Una vez finalizado el <code>jistu deploy</code> te mostrara la url de tu aplicación que por lo general es: http://APPNOMBRE.nodejistu.com</p>
+
+<h2>Heroku</h2>
+
+<p>Heroku sera del último que hable pues los demás actuan de similar forma. Si ya haz trabajado con heroku todo el proceso es similar. De igual forma heroku ofrece servidores de node.js gratuitos (claro si quieres aumentar la capacidad de tu server tienes que pagar). Para empezar tienes que tener tu estación de trabajo lista para trabajar con heroku, ocupas una cuenta y que tus <code>keys</code> esten autorizadas, de igual forma necesitas tener instalado el toolbelt instalado:</p>
+
+<pre><code>// en el caso de un UBUNTU
+&gt; apt-add-repository &#39;deb http://toolbelt.herokuapp.com/ubuntu ./&#39;
+curl http://toolbelt.herokuapp.com/apt/release.key | apt-key add -
+&gt; apt-get update
+&gt; apt-get install heroku-toolbelt
+
+// en el caso de MacOS ya existe un paquete
+&gt; curl http://assets.heroku.com/heroku-toolbelt/heroku-toolbelt.pkg &gt; toolbelt.pkg</code></pre>
+
+<p>Luego haz <em>heroku login</em> para identificar tu sistema en heroku. Una vez hecho esto ya estas listo para hacer un deploy, de igual forma que con nodejistu ocupas tu <code>package.json</code> donde esten especificados todos los módulos que estas ocupando, como sigue:</p>
+
+<pre><code>// Package.json
+{
+  &quot;name&quot;: &quot;node-example&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;2.2.0&quot;
+  }
+}</code></pre>
+
+<p>Si queres probar tu paquete haz <em>npm install</em> y si termina en &quot;OK&quot; es porque esta bien hecho. Ya que heroku es un servicio un poco rubyista ocupas un <code>Procfile</code> donde describas el servicio que usas:</p>
+
+<pre><code>// Guardas esta linea con el nombre de: Procfile 
+web: node SERVER.js</code></pre>
+
+<p>Luego de esto haz los <code>commits</code> necesarios con git y luego:</p>
+
+<pre><code>&gt; heroku create  --stack cedar
+// Y haz deploy
+&gt; git push heroku master 
+// Según la documentación de heroku ocupas iniciar manualmente el Procfile
+&gt; heroku ps:scale web=1
+// Si quieres probar si todo salio bien:
+&gt; heroku ps</code></pre>
+
+<p>Ahora bien la aplicación debe estar ejecutandose en los servidores, pero necesitas manualmente establecer el ambiente del servidor a producción </p>
+
+<pre><code>&gt; heroku config:add NODE_ENV=production</code></pre>
+
+<p>Si quieres leer más acerca de workers y todo el rollo de escalabilidad en heroku visita este <a href="http://devcenter.heroku.com/articles/node-js">link</a>.</p>
+
+<h2>En conclusión</h2>
+
+<p>Como pueden ver existen una cantidad bastante considerable de servicios de hosting para node.js y muchos de ellos grátis, ¿excelente no? Si necesitas montar tu propio servicio existen ya muchos métodos bastante efectivos como el propio <a href="http://github.com/nodester">nodester</a> o <a href="http://github.com/nodejitsu/haibu">haibu</a>, este último es el servidor que usa nodejitsu para su plataforma, asi que todo el trabajo que necesitas hacer es instalarlos en tu propio servidor, de igual forma existen métodos donde no ocupas de toda una plataforma, particularmente encontre de mucha ayuda <a href="http://blog.clock.co.uk/2011/04/11/deploying-node-js-apps/">este post de clock.co.uk</a>, ellos usan una técnica bastante útil y aparte le sacan provecho a la versionización de los proyectos.</p>
+
+<h3>Definiciones:</h3>
+
+<ul><li><a href="http://es.wikipedia.org/wiki/Software_como_servicio">SaaS</a>:  es un modelo de distribución de software donde el software y los datos que maneja se alojan en servidores de la compañía de tecnologías de información y comunicación (TIC) y se accede con un navegador web a través de internet. La empresa TIC provee el servicio de mantenimiento, operación diaria, y soporte del software usado por el cliente. Regularmente el software puede ser consultado en cualquier computador, esté presente en la empresa o no. Se deduce que la información, el procesamiento, los insumos y los resultados de la lógica de negocio del software están hospedados en la compañía de TIC.</li></ul>
+
+<h3>Goodie:</h3>
+
+<p>El goodie de esta semana, es más que una buena práctica de <em>npm</em>, lo más lógico al instalar paquetes con npm necesitas hacer sudo verdad. Bueno lo más apropiado es no usar <em>sudo</em>, por el simple hecho de que hay modulos que interactuan con muchas otras cosas y desde el momento que lo instalas con sudo todos sus procesos necesita hacerlos como master lo cual no es muy bueno que digamos. Para este pequeño capricho o problema podemos cambiar los permisos a el directorio personal (que es donde se instalan los modulos) y cambiar de propietario a tu perfil de usuario mediante:</p>
+
+<pre><code>&gt; sudo chown -R $USER /usr/local</code></pre>
+
+<p>Una vez hecho esto ya no ocupas hacer:</p>
+
+<pre><code>&gt; sudo npm install -g package</code></pre>
+
+<p><em>disclaimer</em> Hay muchas compañias que ofrecen hosting para <a href="http://nodejs.org" title="nodejs">node.js</a> si se me olvida alguno, dejalo en los comentarios ;)</p>
+
+<p>Gracias por leer hasta el final y no te olvides de darle un follow a <a href="http://twitter.com/NodeHispano">@NodeHispano</a> y dejar tu comentario.</p>

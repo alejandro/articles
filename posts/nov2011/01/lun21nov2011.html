@@ -1,0 +1,209 @@
+<html>
+<head>
+<meta charset="utf8">
+<title> ¿Y ahora?</title>
+</head>
+<body>
+<h1>¿Y ahora?</h1>
+
+<p><em>Bueno, ya tengo instalado <a href="http://nodejs.org" title="Página Oficial">node.js</a> (aka Node, Node.js, NodeJS) en mi computador, ¿Y ahora?.</em></p>
+
+<p>Esta es una pregunta que se han de hacer muchos, <a href="http://nodejs.org" title="Página Oficial">node.js</a> se ha vuelto todo un tema en los últimos meses, años (?). Solo es de ver cuanto se habla en las <a href="https://twitter.com/#!/search?q=node.js" title="Twitter search">redes</a>  <a href="http://www.indeed.com/q-Node-Js-jobs.html" title="Jobs">sociales</a>,  o los <a href="http://www.google.com/trends?q=node.js" title="Google Trends">trends</a> en Google y sumado al hecho de que <a href="http://blogs.msdn.com/b/interoperability/archive/2011/06/23/microsoft-working-with-joyent-and-the-node-community-to-bring-node-js-to-windows.aspx" title="En Microsoft">microsoft</a> <a href="http://www.guardian.co.uk/technology/blog/2011/nov/09/programming-microsoft" title="Articulo de el guardian">unió</a> <a href="http://www.readwriteweb.com/hack/2011/06/microsoft-is-helping-joyent-po.php" title="En RWW">fuerzas</a> con <a href="http://www.joyent.com/" title="Joyent">joyent</a> (la empresa encargada del desarrollo de node). Sin embargo, <a href="http://nodejs.org" title="Página Oficial">node.js</a> es más que una simple moda, es el futuro de las aplicaciones web (si, al fin lo dije), javascript es el lenguaje, por excelencia, en cuanto a desarrollo front-end y ahora que lo tenemos del lado del servidor es más que una bendición, ya que debido a la flexibilidad y fácil uso de este lenguaje ha traído enormes beneficios a lo que es el desarrollo de aplicaciones web. </p>
+
+<h2>Entorno de Trabajo</h2>
+
+<p>En <a href="http://www.nodehispano.com/2011/11/como-instalar-node-js-en-mac-os-x-lion-nodejs/" title="Instalando en MacOS">previos</a>  <a href="http://www.nodehispano.com/2011/11/como-instalar-node-js-en-ubuntu-linux-nodejs/" title="Instalando en  Ubuntu">articulos</a> <a href="https://gist.github.com/1379584" title="Gist">hemos</a> visto como instalar node en las distintas plataformas (para windows existe un <a href="http://nodejs.org/dist/v0.6.2/node-v0.6.2.msi" title="*.msi installer">*.msi</a>), así que si no lo has instalado te invitamos para que le des un vistazo. </p>
+
+<p>Una vez que tienes instalado node.js en tu sistema lo siguiente es establecer un entorno de trabajo. Si bien es cierto para poder empezar a trabajar con Node lo único que ocupas es un editor de texto y la linea de comandos, es bastante útil tener un entorno de trabajo que te ayuden a trabajar de una manera más fluida. Si estas trabajando en MacOS, texmate es editor de preferencia, pero tambien esta <a href="http://www.guardian.co.uk/technology/blog/2011/nov/09/programming-microsoft" title="Articulo de el guardian">sublime text</a> que es una opción multiplataforma, además existen otras opciones, al final es cuestión de gustos (yo uso una mezcla de vim y sublime text).</p>
+
+<h2>Creando web aplicaciones con Node</h2>
+
+<p>Al momento de crear aplicaciones web, estás ante muchas decisiones: crear un tipo de aplicación REST API o no, Aplicaciones de una sola página (Single Page App), persistencia de datos o no, escalable o no, y asi.</p>
+
+<p>Las ventajas de escribir apps de una sola página es la experiencia de usuario (menos páginas recargadas, etc.), tambien ofrece un soporte nativo fácil para móviles, sacando provecho de la API generada inicialmente (esto quiere decir que no ocupas crear una nueva estructura para ofrecer una versión móvil del sitio). Ya que es muy fácil crear un aplicación basada en servicios API que una con <em>n</em> cantidad de rutas distintas y <em>n</em> request a tu servidor. Además de ser eficientes implican un huella en el servidor bastante baja, ayudando por ende a la escalabilidad de la misma. Uno de los grandes problemas es SEO, ya que como son app de una sola página es más díficil localizar contenido (hashbangs y todo el tema) (aunque ya hay <a href="https://github.com/balupton/History.js/ ," title="history.js y HTML5">soluciones</a> ).  Asi que podriamos decir que tenemos ventajas y desventajas para poder irnos por este estilo de aplicación.</p>
+
+<p>En la imagen a continuación podemos observar un diagrama que nos ayuda a identificar los puntos criticos a tomar en cuenta al momento de crear nuestras aplicaciones. Este esquema es muy útil ya que este modelo estable un patrón de trabajo bastante sencillo y estable.</p>
+
+<p><img src="http://blog.nodejitsu.com/single-page-apps-with-nodejs/SPAs.png" alt="alt text" title="Estructura de una aplicación, img original de nodejitsu" /></p>
+
+<p><em>Nota:</em> Si tu servicio esta basado en REST API asegurate que tus respuestas sean estandares, usa herramientas que te ayudan a escribir mejor código, como <a href="http://www.jshint.com/ ," title="Con soporte para node: npm install jshint">jslint</a> o <a href="http://jsonlint.com/ ," title="Para asegurarte que tus JSON este bien estructurados">jsonlint</a></p>
+
+<p>Si te decides por utilizar múltiples rutas podrias utilizar de igual forma el modelo anterior para reducir tiempos de carga o recarga, asi como menor cantidad de kb provenientes de tu servidor. Lo cual se convierte a, largo plazo, un ahorro, asi como una mejor experiencia de usuario.</p>
+
+<p>Además puedes sacar provecho de <em>Local Storage</em> , y evitar recargar una y otra vez recursos que pueden ser almacenados en el ordernador del usuario final, así como configuraciones personales y otras cosas. Y si tengo que darte un consejo este seria: mira hacia el futuro y abraza las nuevas tecnologías haz que tus usuarios lo hagan tambien y asi hacemos del Internet un mejor lugar. </p>
+
+<h2>Ayuda</h2>
+
+<p>Una de los grandes factores que han contribuido a la popularidad de Node es su comunidad, es simplemente agradable y además bien entusiasta, actualmente hay <a href="http://search.npmjs.org/#/_browse/all" title="npm search">5141</a> modúlos en <a href="http://search.npmjs.org/#/_browse/all" title="npm search">npm</a> a disposición de todo aquel que quiera trabajar en casi cualquier cosa. Desde algunos <a href="https://github.com/felixge/node-graphite" title="node-graphite">bastante</a>  <a href="https://github.com/hookio" title="Hook.io">útiles</a> a otros <a href="https://github.com/nodejitsu/kohai" title="kohai">simplemente</a>  <a href="https://github.com/visionmedia/term-canvas" title="term-canvas">interesantes</a></p>
+
+<p>Pero para poder crear este tipo de aplicaciones web se ocupan herramientas, si eres un js ninja te va gustar empezar desde 0, pero apliquemos el <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself" title="No repitas tú mismo">DRY</a> y usemos estos modúlos que la comunidad ha creado.</p>
+
+<p>Mi stack esta particularmente constituido por: <a href="http://expressjs.org">expressjs</a>, <a href="https://github.com/mranney/node_redis/">redis</a> y <a href="http//nowjs.orgs">nowjs</a> (que es una útileria con esteroides de <a href="https://github.com/LearnBoost/Socket.IO">socket.io</a> para aplicaciones en tiempo real). </p>
+
+<h3><a href="http://expressjs.org">Express</a></h3>
+
+<p>Express es un framework que realmente te hace fácil el proceso de crear aplicaciónes, es bastante robusto e inspirado en sinatra. Para instalarlo:</p>
+
+<pre><code>npm install -g express
+</code></pre>
+
+<p>Para crear una aplicación y toda su estructura:</p>
+
+<pre><code>express appnombre
+cd appnombre
+node app.js
+</code></pre>
+
+<p>De entre las tantas cosas que tiene este framework podemos destacar:</p>
+
+<ul>
+<li><p>Escrito sobre <a href="http://senchalabs.github.com/connect">connect</a> el cual nos provee:</p>
+
+<ul><li>Session Handler</li>
+<li>11 middleware poderosos asi como de terceros.</li>
+<li>cookieParser, bodyParser...</li>
+<li><a href="http://senchalabs.github.com/connect/middleware-vhost.html">vhost</a></li>
+<li><a href="http://senchalabs.github.com/connect/middleware-router.html">router</a>, y contando...</li></ul></li>
+</ul>
+
+<p>En futuros articulos escribire más acerca de express.</p>
+
+<p>Existen otras soluciones como <a href="http://github.com/flatiron">flatiron</a> o <a href="http://github.com/hookio">hook.io</a> que proveen de herramientas bastante útiles, además esta <a href="http://railwayjs.com">railwayjs</a> y por último pero no menos importante <a href="http://geddyjs.org/">Geddy</a>. Cada uno con sus virtudes y defectos, en cuanto a popularidad la lista la encabeza express. 
+Una de las ventajas de utilizar un framework en cuanto a aplicaciones web, radica en el hecho del manejo de rutas y sessiones, y archivos estáticos son simplificados enormemente por sus middleware y el API de cada uno de ellos. </p>
+
+<h3>Nowjs</h3>
+
+<p>Como su descripción lo dice: Hace de las aplicaciones en tiempo real un trabajo fácil. Nowjs crea un <code>namespace</code> tanto en el servidor como el cliente, asi que puedes crear funciones que funcionan en tu servidor y acceder a ellas desde el navegador (es de gran utilidad en navegadores que no soportan nuevos estandares de javascript).</p>
+
+<p>Para instalarlo:</p>
+
+<pre><code>npm install -g now
+</code></pre>
+
+<p>Luego en tu aplicación:</p>
+
+<pre><code>var nowjs = require('now');
+</code></pre>
+
+<p>Y en el lado del cliente:</p>
+
+<pre><code>// jQuery tiene que cargar primero
+&lt;script src="/nowjs/now.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Este es el hello world de nowjs:</p>
+
+<pre><code>// En el lado del cliente helloworld.html
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;title&gt;nowjs chat &lt;/title&gt;
+&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="/nowjs/now.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+$(document).ready(function(){
+
+  now.receiveMessage = function(name, message){
+    $("#messages").append("&lt;br&gt;" + name + ": " + message);
+  }
+
+  $("#send-button").click(function(){
+    now.distributeMessage($("#text-input").val());
+    $("#text-input").val("");
+  });
+
+  now.name = prompt("What's your name?", "");
+
+});
+&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;div id="messages"&gt;&lt;/div&gt;
+  &lt;input type="text" id="text-input"&gt;
+  &lt;input type="button" value="Send" id="send-button"&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Y en tu servidor:</p>
+
+<pre><code>var html = require('fs').readFileSync(__dirname+'/helloworld.html');
+var server = require('http').createServer(function(req, res){
+  res.end(html);
+});
+server.listen(8080);
+
+var nowjs = require("now");
+var everyone = nowjs.initialize(server);
+
+everyone.now.distributeMessage = function(message){
+  everyone.now.receiveMessage(this.now.name, message);
+};
+</code></pre>
+
+<p>Y listo ya tienes tu propia sala de chat. Al igual que express hablaremos más detallado de nowjs en otros articulos. 
+La ventaja de utilizar nowjs es que simplifica el uso de socket.io, y no es que sea difícil, pero hace aún más fácil todo el proceso. </p>
+
+<p>Actualmente existen suficientes modúlos como para preocuparse de que node.js no "tenga algo que ocupe", con decirte que hasta hay un proyecto con el propósito de traer el api de Canvas a tu terminal (<a href="http://github.com/visionmedia/term-canvas" title="Canvas Api en tu consola">term-canvas</a>)</p>
+
+<h2>¿Y quienes usan node.js?</h2>
+
+<p>Luego de casi 2 años en el medio ya existen múltiples aplicaciones exitosas y en crecimiento:</p>
+
+<ul>
+<li><a href="http://learnboast.com">Learnboast</a> (que aparte son contribuidores)</li>
+<li><a href="http://geekli.st">Geeklist</a></li>
+<li><a href="http://transloadit">Transloadit</a></li>
+<li><a href="http://substance.io">Substance</a></li>
+<li><a href="https://github.com/joyent/node/wiki/Projects,-Applications,-and-Companies-Using-Node">Y muchos más</a></li>
+</ul>
+
+<h2>En conclusión</h2>
+
+<p>El escribir aplicación con node.js es de las cosas más sencillas, lo único que realmente necesitas es voluntad y buenas ideas, para crear aplicaciones y modúlos. Una de las grandes desventajas que encontre al empezar con nodejs (como hace unos 10 meses) es que toda la documentación esta escrita en inglés y todavia esta en inglés asi que muchas gracias por leer <a href="http://nodehispano.com">NodeHispano</a> y ayudanos a difundir el sitio para que poco a poco la comunidad hispano-hablante vaya creciendo poco a poco. </p>
+
+<h2>Links Recomendados</h2>
+
+<p>Sin orden alguno.</p>
+
+<ul>
+<li>La documentación que mantiene <a href="http://nodejitsu.com">nodejitsu</a>: <a href="http://docs.nodejitsu.com">docs.nodejitsu.com</a></li>
+<li><a href="http://howtonode.org/" title="Tutoriales">How to Node</a></li>
+<li><a href="http://dailyjs.com" title="Tutoriales y más">Dailyjs</a></li>
+<li><a href="http://nodetuts.com">Video tutoriales</a></li>
+<li>Escribiendo modúlos para node: <a href="http://howtonode.org/how-to-module" title="En inglés">How to Module</a> </li>
+</ul>
+
+<h3>Pro Tips</h3>
+
+<ul>
+<li>Unete a los canales IRC de node.js en freenode (#node.js)</li>
+<li>Asi como el IRC de <a href="nodejitsu">nodejitsu</a>  (#nodejitsu) y mira la <a href="http://docs.nodejitsu.com">documentación</a> que ellos manejan.</li>
+<li>Sigue <a href="http://twitter.com/ry ," title="Ryan">a</a>  <a href="http://twitter.com/izs ," title="Issac">los</a> <a href="http://twitter.com/felixg ," title="Felix">grandes</a> <a href="http://twitter.com/marak ," title="marak">en</a> twitter</li>
+<li>Dale follow al projecto de <a href="http://github.com/joyent/node">node.js</a> en Github</li>
+</ul>
+
+<h3>Goodie</h3>
+
+<p>En vez de hacer una concatenación con <code>+</code>:</p>
+
+<pre><code>console.log("hola" + "mundo")
+</code></pre>
+
+<p>Puedes hacer: (separando con comas los argumentos)</p>
+
+<pre><code>console.log)("hola","mundo"
+// "Hola Mundo"
+</code></pre>
+
+<h2>Del autor</h2>
+
+<p><a href="http://alejandromorales.co.cc">Alejandro Morales</a>, Hondureño, Estudiante universitario, Astrolover, HTML5, CSS3, node.js aficionado. Gran observador de la conducta humana. Conocido en la internet y IRC como "alejandromg". Puedes seguirlo en <a href="http://twitter.com/_alejandromg">twitter</a>, o ver en lo que esta trabajando en <a href="http://github.com/alejandromg">github</a>, o en <a href="http://forrst.me/alejandromg">forrst</a>. </p>
+
+
+
+
+</body>
+</html>

@@ -1,18 +1,16 @@
-# [The Kitchensink Skeleton](https://github.com/balupton/kitchensink.docpad) for [DocPad](https://github.com/balupton/docpad)
+# Articles
 
-## Give it a go
+Repositorio con mis artículos, post, notas, etc... En constante cambio, algunos no estan terminados o están en proceso.
 
-``` bash
-npm install -g docpad
-git clone git://github.com/balupton/kitchensink.docpad.git
-cd kitchensink.docpad
-docpad run
-```
+La mayoria están escritos para [NodeHispano](http://nodehispano.com), otros para mi [blog](http://alejandromorales.co.cc).
 
-## Credits
 
-Kitchensink Skeleton is developed by [Benjamin Lupton](http://balupton.com) and licensed under the [MIT License](http://creativecommons.org/licenses/MIT/)
+# Author
 
-[Twitter Bootstrap](http://twitter.github.com/bootstrap/) is developed by [Twitter](https://dev.twitter.com/blog/bootstrap-twitter) and licensed under the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [Alejandro Morales](http://alejandromorales.co.cc "Homepage")
 
-[DocPad](https://github.com/balupton/docpad) is the easiest way to generate your static websites. Why not give it a go?
+# Licencia
+
+[![alt text](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)]("http://creativecommons.org/licenses/by-nc-sa/3.0/" "creative commons")
+
+Los Articulos por [Alejandro Morales]("http://github.com/alejandromg") se encuentra bajo una Licencia [Creative Commons Atribución-NoComercial-CompartirIgual 3.0 Unported]("http://creativecommons.org/licenses/by-nc-sa/3.0/")

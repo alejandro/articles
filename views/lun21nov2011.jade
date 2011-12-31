@@ -1,0 +1,71 @@
+section
+  markdown:
+
+    ## ¿Y ahora?
+    - _Disclaimer_: El propósito de este artículo es el de ayudarte a completar la migración a node. Si ya has trabajado en javascript pues hay ciertos tips que te ayudaran a ser un mejor node developer.
+
+    _Bueno, ya tengo instalado [node.js][1] (aka Node, Node.js, NodeJS) en mi computador, ¿Y ahora?._
+
+    Esta es una pregunta que se han de hacer muchos, [node.js][1] se ha vuelto todo un tema en los últimos meses, años (?). Solo es de ver cuanto se habla en las [redes][4]  [sociales][5],  o los [trends][3] en Google y sumado al hecho de que [microsoft][7] [unió][6] [fuerzas][8] con [joyent][9] (la empresa encargada del desarrollo de node). Sin embargo, [node.js][1] es más que una simple moda, es el futuro de las aplicaciones web (si, al fin lo dije), javascript es el lenguaje, por excelencia, en cuanto a desarrollo front-end y ahora que lo tenemos del lado del servidor es más que una bendición, ya que debido a la flexibilidad y fácil uso de este lenguaje ha traído enormes beneficios a lo que es el desarrollo de aplicaciones web. 
+
+    ## Entorno de Trabajo
+
+    En [previos][10]  [articulos][11] [hemos][12] visto como instalar node en las distintas plataformas (para windows existe un [*.msi][12]), así que si no lo has instalado te invitamos para que le des un vistazo. 
+
+    Una vez que tienes instalado node.js en tu sistema lo siguiente es establecer un entorno de trabajo. Si bien es cierto para poder empezar a trabajar con Node lo único que ocupas es un editor de texto y la linea de comandos, es bastante útil tener un entorno de trabajo que te ayuden a trabajar de una manera más fluida. Si estas trabajando en MacOS, texmate es editor de preferencia, pero tambien esta [sublime text][6] que es una opción multiplataforma, además existen otras opciones, al final es cuestión de gustos (yo uso una mezcla de vim y sublime text).
+
+
+    ## Creando aplicaciones con Node
+
+    Una de los grandes factores que han contribuido a la popularidad de Node es su comunidad, es simplemente agradable y además bien entusiasta, actualmente hay [5141][14] modulos en [npm][14] a disposición de todo aquel que quiera trabajar en casi cualquier cosa. Desde algunos [bastante][16]  [útiles][15] a otros [simplemente][18]  [interesantes][17]
+
+
+    Use: 
+    ----
+        // require the module first (assuming that it's called ncomm, TODO)
+        var comments = require('ncomm');
+
+        // then just manipulate with the module
+        // for the moment all the methods are asyncronous
+        comments.newComment(req, function(error,data){
+          // code goes here
+        });
+
+    Installation
+    ------------
+
+    At this moment only exist this repository so if you want to test it out
+        git clone git://github.com/alejandromg/node-comm.git
+    Then:
+        npm install
+
+    Contributors:
+    -------------
+    * [Alejandro Morales][3]
+
+    Tests:
+    ------
+
+    Just in the way...
+    License:
+    --------
+    MIT 2011
+
+        [1]: http://nodejs.org
+        [2]: http://github.com/numbus-org
+        [4]: https://twitter.com/#!/search?q=node.js
+        [3]: http://www.google.com/trends?q=node.js
+        [5]: http://www.indeed.com/q-Node-Js-jobs.html
+        [6]: http://www.guardian.co.uk/technology/blog/2011/nov/09/programming-microsoft
+        [7]: http://blogs.msdn.com/b/interoperability/archive/2011/06/23/microsoft-working-with-joyent-and-the-node-community-to-bring-node-js-to-windows.aspx
+        [8]: http://www.readwriteweb.com/hack/2011/06/microsoft-is-helping-joyent-po.php
+        [9]: http://www.joyent.com/
+        [10]: http://www.nodehispano.com/2011/11/como-instalar-node-js-en-mac-os-x-lion-nodejs/
+        [11]: http://www.nodehispano.com/2011/11/como-instalar-node-js-en-ubuntu-linux-nodejs/
+        [12]: http://nodejs.org/dist/v0.6.2/node-v0.6.2.msi
+        [13]: http://www.sublimetext.com
+        [14]: http://search.npmjs.org/#/_browse/all
+        [15]: https://github.com/hookio
+        [16]: https://github.com/felixge/node-graphite
+        [17]: https://github.com/visionmedia/term-canvas
+        [18]: https://github.com/nodejitsu/kohai
