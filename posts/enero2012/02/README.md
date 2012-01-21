@@ -313,7 +313,7 @@ Termina la respuesta. Necesaria al utilizar `res.write`, `res.send`.
 
 ## En Conclusión
 
-El primer commit de express data del [21 de Junio del 2009](https://github.com/visionmedia/express/graphs/impact), lo cual lo hace muy maduro y sorprendentemente estable y robusto. Además el API que proporciona es muy fácil de entender y manejar, te ahorra tiempo y te ayuda en tu desarrollo. Hay mucho que decir acerca de express, pero lo más sencillo es que tú abras tu editor de texto y empieces a escribir codigo a hacer `console.log()` por todos lados para ver como funciona y que otros métodos proporciona además de los mencionados aquí. 
+El primer commit de express data del [21 de Junio del 2009](https://github.com/visionmedia/express/graphs/impact), lo cual lo hace muy maduro y sorprendentemente estable y robusto. Además el API que proporciona es muy fácil de entender y manejar, te ahorra tiempo y te ayuda en tu desarrollo. Hay mucho que decir acerca de express, pero lo más sencillo es que tú abras tu editor de texto y empieces a escribir codigo, y hacer `console.log()` por todos lados para ver como funciona y que otros métodos proporciona además de los mencionados aquí. Si tienes más links que compartir deja tu comentario. Da un follow a [nodehispano](http://twitter/nodehispano) y mantente pendiente de esta página.
 
 ## Links Recomendados
 
@@ -322,6 +322,8 @@ El primer commit de express data del [21 de Junio del 2009](https://github.com/v
  - [NodeTuts](http://nodetuts.com/tutorials/12-file-uploads-using-nodejs-and-express.html) Subiendo archivos con node.js y express.
  - [geekli.st](http://geekli.st): Escrito en node.js y express
  - [Google Group de Express](http://groups.google.com/group/express-js)
+
+ Si eres mexicano, [pinguxx](http://twitter.com/pinguxx) ha creado un [grupo](https://groups.google.com/group/nodejs-mexico)
 
 _disclaimer:_ Este blog muy pronto estara en actualización, ya que express 3.0 esta por llegar.
 
