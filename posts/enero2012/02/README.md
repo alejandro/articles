@@ -323,7 +323,7 @@ El primer commit de express data del [21 de Junio del 2009](https://github.com/v
  - [geekli.st](http://geekli.st): Escrito en node.js y express
  - [Google Group de Express](http://groups.google.com/group/express-js)
 
- Si eres mexicano, [pinguxx](http://twitter.com/pinguxx) ha creado un [grupo](https://groups.google.com/group/nodejs-mexico)
+ Si eres mexicano, [Ivan Torres (pinguxx)](http://twitter.com/pinguxx) ha creado un [grupo](https://groups.google.com/group/nodejs-mexico).
 
 _disclaimer:_ Este blog muy pronto estara en actualización, ya que express 3.0 esta por llegar.
 
