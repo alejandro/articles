@@ -1,5 +1,7 @@
-# Getting good at Express
+# El framework Express
 _High performance, high class web development for Node.js_
+
+**version: 2.5.6**
 
 [Express][1] es sin duda el framework más conocido de node.js, es una extensión del poderoso [connect][2] y esta inspirado en **sinatra**, además es robusto, rápido, flexible, simple... 
 
@@ -262,8 +264,10 @@ Un modulo muy importante es `connect-redis` si usas redis, o `connect-couchdb` s
 
 El método (?) response, tiene una gran cantidad de funciones y otros métodos disponibles. Por ejemplo:
 
-- `res.sendfile('/path/to/archivo')` envia un archivo directamente al usuario, muy útil para enviar archivos html directamente.
-- `res.json(DATA)`, envia como respuesta un documento en formato `json`.
+#### `res.sendfile('/path/to/archivo')`
+Envia un archivo directamente al usuario, muy útil para enviar archivos html directamente.
+#### `res.json(DATA)`
+Envia como respuesta un documento en formato `json`.
 
 #### `res.write()`
 
@@ -284,9 +288,15 @@ Es un método primario y se puede utilizar múltiples veces tambien.
      res.send('text', { 'Content-Type': 'text/plain' }, 201);
      res.send(404);
 
-- `res.writeHeader(CODE,Content-type)`, define el tipo de datos de la respuesta por ejemplo si usas `res.write()` con html como el ejemplo anterior, ocupas definir el tipo de contenido. `{"Content-type","text/html"}`
-- `res.contentType(type)`, al igual que `res.writeHeader()` nada más que en este caso solo pasas él Content-type.
-- `res.redirect()`, ¿es necesario decir algo?
+#### `res.writeHeader(CODE,Content-type)`
+Define el tipo de datos de la respuesta por ejemplo si usas `res.write()` con html como el ejemplo anterior, ocupas definir el tipo de contenido. `{"Content-type","text/html"}`
+
+#### `res.contentType(type)` 
+Al igual que `res.writeHeader()` nada más que en este caso solo pasas él Content-type.
+
+#### `res.redirect()`
+¿es necesario decir algo?
+
 #### `res.render`
 
 Define y renderiza una `template` o `layout`, el uso más comun es el siguiente:
@@ -297,9 +307,23 @@ Define y renderiza una `template` o `layout`, el uso más comun es el siguiente:
       nombre: 'NOMBRE'
     })
 
-- `res.end()`, necesaria al utilizar `res.write`, `res.send`. Termina la respuesta.
+#### `res.end()`
+Termina la respuesta. Necesaria al utilizar `res.write`, `res.send`.
 
-_disclaimer:_ Sinceramente no se me ocurrio otro titulo :P
+
+## En Conclusión
+
+El primer commit de express data del [21 de Junio del 2009](https://github.com/visionmedia/express/graphs/impact), lo cual lo hace muy maduro y sorprendentemente estable y robusto. Además el API que proporciona es muy fácil de entender y manejar, te ahorra tiempo y te ayuda en tu desarrollo. Hay mucho que decir acerca de express, pero lo más sencillo es que tú abras tu editor de texto y empieces a escribir codigo a hacer `console.log()` por todos lados para ver como funciona y que otros métodos proporciona además de los mencionados aquí. 
+
+## Links Recomendados
+
+ - [Documentación de Express](http://expressjs.com/guide.html)
+ - [Koalite Blog](http://blog.koalite.com/2011/11/tutorial-node-js-express-jquery-i-creando-la-aplicacion/): Ejemplo de una aplicación usando express.
+ - [NodeTuts](http://nodetuts.com/tutorials/12-file-uploads-using-nodejs-and-express.html) Subiendo archivos con node.js y express.
+ - [geekli.st](http://geekli.st): Escrito en node.js y express
+ - [Google Group de Express](http://groups.google.com/group/express-js)
+
+_disclaimer:_ Este blog muy pronto estara en actualización, ya que express 3.0 esta por llegar.
 
 [1]: http://expressjs.com "npm install express -g"
 [2]: http://senchalabs.org/connect "npm install connect"
