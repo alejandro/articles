@@ -1,0 +1,386 @@
+<html>
+<head>
+  <meta charset="utf8">
+  <title> El Framework express</title>
+</head>
+<body>
+<div class="markdown-body"><h1>El framework Express</h1>
+
+<p><em>High performance, high class web development for Node.js</em></p>
+
+<p><strong>version: 2.5.6</strong></p>
+
+<p><a href="http://expressjs.com" title="npm install express -g">Express</a> es sin duda el framework más conocido de node.js, es una extensión del poderoso <a href="http://senchalabs.org/connect" title="npm install connect">connect</a> y esta inspirado en <strong>sinatra</strong>, además es robusto, rápido, flexible, simple... </p>
+
+<p>Sin duda el exito de <a href="http://expressjs.com" title="npm install express -g">express</a> radica en lo sencillo que es usarlo, y además abarca un sin número de aspectos que muchos desconocen pero son necesarios.</p>
+
+<p>De entre las tantas cosas que tiene este framework podemos destacar:</p>
+
+<ul>
+<li>Session Handler</li>
+<li>11 middleware poderosos asi como de terceros.</li>
+<li>cookieParser, bodyParser...</li>
+<li><a href="http://senchalabs.github.com/connect/middleware-vhost.html">vhost</a></li>
+<li>
+<a href="http://senchalabs.github.com/connect/middleware-router.html">router</a>, y contando...</li>
+</ul><p>Para comenzar, y suponiendo que tienes ya instalado <a href="http://www.nodehispano.com/2011/11/como-instalar-node-js-en-mac-os-x-lion-nodejs/" title="Instalando en MacOS">node</a> y <a href="http://www.nodehispano.com/2011/11/como-instalar-node-js-en-ubuntu-linux-nodejs/" title="Instalando en  Ubuntu">npm</a>, lo único que es necesario hacer es lo siguiente:</p>
+
+<pre><code>$ npm install -g express
+</code></pre>
+
+<p>A través de esta linea, estamos instalando globalmente <a href="http://expressjs.com" title="npm install express -g">express</a>, el cual expone una interfaz interactiva en la linea de comandos. Por ejemplo si escribimos <code>express -h</code> lo siguiente sera mostrado:</p>
+
+<pre><code>Usage: express [options] [path]
+
+Options:
+  -s, --sessions           add session support
+  -t, --template &lt;engine&gt;  add template &lt;engine&gt; support (jade|ejs). default=jade
+  -c, --css &lt;engine&gt;       add stylesheet &lt;engine&gt; support (stylus). default=plain css
+  -v, --version            output framework version
+  -h, --help               output help information
+</code></pre>
+
+<p>Una vez instalado <a href="http://expressjs.com" title="npm install express -g">express</a> puedes utilizar <code>express NOMBRE-DEL-APP</code> lo cual te creara una estructura personalizada y los archivos necesarios para comenzar a trabajar con el mismo. Haz <code>cd NOMBRE-DEL-APP &amp;&amp; npm install</code> para instalar automaticamente las dependencias, la estructura generada seria como la siguiente:</p>
+
+<pre><code>NOMBRE-DEL-APP
+\
+ |- package.json
+ |- app.js
+ |- public
+    \ 
+     |- javascripts
+     |- stylesheets
+     |- images
+ |- routes
+    \
+     |- index.js
+ |- views
+    \
+     |- layout.jade
+     |- index.jade
+</code></pre>
+
+<p>Como podemos ver, la estructura que se genera es muy útil y sencilla, se ha creado un <code>package.json</code> el cual contiene toda las dependencias necesarias de la aplicación. Si quieres saber más como funciona <code>package.json</code> visita este <a href="http://package.json.jit.su" title="Documentación del package.json">link</a>.</p>
+
+<h2>app.js</h2>
+
+<p>Una aplicación escrita con <a href="http://expressjs.com" title="npm install express -g">express</a> posee ciertos rasgos y cosas que no se pueden obviar, en <code>app.js</code> existe una estructura interna bien definida y es como sigue:</p>
+
+<pre><code>// app.js
+var express = require('express')
+  , routes = require('./routes')
+
+var app = module.exports = express.createServer();
+</code></pre>
+
+<p>En esta primera parte se <strong>requieren</strong> los modúlos o archivos externos necesarios para ejecutar la aplicación, en este caso el mismo <code>express</code> y <code>routes</code> que es ni más ni menos un archivo donde se encuentran cada una de las rutas disponibles, <code>routes</code> es algo opcional, ya que tu mismo puedes ir generando las rutas a medida que vas avanzando. De igual forma, en esta parte se <strong>crea</strong> el servidor, mediante: <code>express.createServer()</code>, y es asignado a la variable <code>app</code> y de igual forma se "exporta" para que este disponible en caso de que sea necesario ejecutarla como secundario.</p>
+
+<h3>Configuración</h3>
+
+<p>La segunda parte y una muy importante es la configuración:</p>
+
+<pre><code>// Configuration
+
+app.configure(function(){
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
+});
+</code></pre>
+
+<p>Es aqui donde se defines aspectos muy importantes para el funcionamiento correcto de nuestra aplicación, comumente conocido como <code>middleware</code>. Como podemos ver se define que el directorio donde se encuentran las <code>vistas</code> (templates) de nuestra aplicación, además se define en que lenguaje o motor esta escrito <code>app.set("view engine", "jade");</code> en este caso en <code>jade</code>, además se define <code>bodyParser</code> y<code>methodOverride</code> mediante <code>app.use()</code> el <strong>bodyParser</strong> en palabras cortas, se encarga de decodificar la información que recibimos de un socket-cliente y lo expone en cada una de las <code>requests</code> mediante <code>request.body</code>. <strong>methodOverride</strong> proveee soporte par el metodo faux HTTP. Como podemos ver se hace uso tambien de el router de express, el cual nos proporciona la habilidad para estructurar nuestro código de una manera más sencilla mediante: <code>app.get('/path', function)</code>, y por último se define el middleware de archivos estáticos con la carpeta donde se encuentran los archivos que son "publicos".</p>
+
+<p>En el código anterior se define una configuración <strong>global</strong> si tu quieres una configuración más especifica, asignale un nombre a tu ambiente mediante:</p>
+
+<pre><code>app.configure('personalizada', function(){
+
+});
+</code></pre>
+
+<p><code>personalizada</code> es una variable global que es pasada al momente de ejecutar tu programa mediante <code>NODE_ENV=personalizada</code> y es así como se origina la siguiente parte del código:</p>
+
+<pre><code>app.configure('development', function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+});
+
+app.configure('production', function(){
+  app.use(express.errorHandler()); 
+});
+</code></pre>
+
+<p>Es aqui donde se definen los ambientes más comunes, el de desarrollo (que es el default) y el de producción,
+en este ejemplo, se hace uso del middleware <code>errorHandler</code>, el cual te muestra las <em>excepciones</em> que el express encuentra, al habilitar <code>showStack</code> tu aplicación al encontrar un error te muestra un mensaje vistoso en el navegador (lo cual solo es útil para vos, por lo tanto no es recomendable mostrarlo en producción).</p>
+
+<p>En mi caso particular es aquí donde defino la base de datos a utilizar. Por ejemplo:</p>
+
+<pre><code>// app.configure('development' ...
+  ...
+  app.set('db-uri','http://localhost:5984/DB')
+  ...
+// app.configure('production' ...
+  ...
+  app.set('db-uri', 'http://USR.iriscouch.com/DB')
+  ...
+</code></pre>
+
+<p>Y así cualquier configuración que tú creas conveniente realizar.</p>
+
+<h3>Rutas</h3>
+
+<p>Las rutas son definitivamente la parte más importante de tu aplicación, porque si estas no están definidas, no existiria una interfaz para él cliente. En el ejemplo se genero esta dirección automaticamente, <code>routes</code> fueron definidas en la primer parte del archivo, y esta definido como sigue:</p>
+
+<pre><code>app.get('/', routes.index);
+</code></pre>
+
+<p>Como podemos ver una ruta esta especificada de la siguiente forma:</p>
+
+<pre><code>app.VERBO(PATH, ACCIÓN);
+</code></pre>
+
+<ul>
+<li>
+<code>app</code> ya la conocemos.</li>
+<li>
+<code>VERBO</code> puede ser:
+
+<ul>
+<li><code>GET</code></li>
+<li><code>POST</code></li>
+<li><code>PUT</code></li>
+<li>
+<code>DELETE</code> </li>
+<li>y así para cada uno de los verbos <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html">HTTP</a>
+</li>
+</ul>
+</li>
+<li>
+<code>PATH</code>: define la dirección de acceso.</li>
+<li>
+<code>ACCION</code>: que es lo que se tiene que hacer.</li>
+</ul><p>Por ejemplo, algo sencillo:</p>
+
+<pre><code>app.post('/user/new', function(request,respone){
+  var body = request.body; // accede a la información enviada por el socket
+  // Guarda la información, haz lo que tengas que hacer
+});
+</code></pre>
+
+<p>O algo más global:</p>
+
+<pre><code>app.get('/blog/:id', function(req,res){ // accede a `/blog/id-largo` pero no a `/blog/id-largo/otro-di'
+  var id = req.params.id; // accede al id que se ha requerido
+})
+</code></pre>
+
+<p>Definiendo el formato:</p>
+
+<pre><code>app.get('/u/:id/mensajes.:format', function(req,res){
+  var id = req.params.id;
+  var format = req.params.format;
+  if (format === 'json'){
+    res.json({status:200, id:id});
+  } else {
+    res.json({status:500});
+  }
+});
+</code></pre>
+
+<p>Otra forma seria:</p>
+
+<pre><code>app.get('/u(*)',function(req,res){})  
+</code></pre>
+
+<p>En este caso concuerdara con todas las direcciones que empiezen con <code>u</code> :</p>
+
+<pre><code>/u/alejandromg/
+/uasdlasdadklasd
+/u.json
+/u.json/potraosda
+</code></pre>
+
+<p>Este metodo tiene sus claras desventajas pero hay escenarios en el que es muy útil. Además de los verbos mencionados tambien se expone:</p>
+
+<pre><code>app.all(*,function)
+</code></pre>
+
+<p>Por la cual pasan todas las request, es muy útil en el caso que quieras detectar si es de un movil, o cualquier cosa que tu quieras. Un aspecto intereante de las rutas es que si bien es cierto responden a una estructura definida, tu puedes definir ciertas acciones antes de dar una respuesta a el usuario que hizo la peticion, ¿a que me refiero?, bueno supongamos que hay cierta área que solo esta disponible para un usuario con cuenta, entonces tu podrias definir la función: <code>verificarCuenta</code> y luego continuar con la <code>request</code>, más especificamente de la siguiente manera:</p>
+
+<pre><code>function verificarCuenta(req,res,next){
+  if (req.session)
+    next()
+  else 
+    res.redirect('/login')
+}
+// luego 
+app.get('/accesorestringido', verificarCuenta, function(req,res){
+  // El usuario esta logueado
+});
+</code></pre>
+
+<p>Y de manera más global:</p>
+
+<pre><code>app.VERB('PATH', ACCION1, ACCION2, ACCION-N, function(req,res){});
+</code></pre>
+
+<p>Como podemos ver, en este caso se define un parametro extra <code>next</code>, mediante "next", nos aseguramos que la aplicación siga su orden normal en el caso de que no alla ningún error. O hacer un <code>res.redirect()</code> para mandar al usuario a otra dirección.</p>
+
+<h3>Listen</h3>
+
+<p>Por último es importante que tu aplicación este disponible en algún puerto (doh!), y es aqui:</p>
+
+<pre><code>app.listen(3000);
+</code></pre>
+
+<p>Por default es el puerto <strong>3000</strong> que queda habilitado para la aplicación, a mi me gusta cambiar esto por algo como lo siguiente:</p>
+
+<pre><code>app.listen(process.env.PORT || 3000);
+</code></pre>
+
+<p><code>process.env.PORT</code> es utilizada por procesos globales de los proveedores de hosting, para especificar el puerto a utilizar por las aplicaciones. Por ejemplo en <a href="http://c9.io">cloud9</a> tenes que especificar: <code>process.env.C9_PORT</code>. </p>
+
+<p>Básicamente esto es lo que te provee <a href="http://expressjs.com" title="npm install express -g">express</a> al hacer <code>express NOMBRE-DEL-APP</code>, pero aparte de esto a mi me gusta especificar otras cosas más. Por ejemplo:</p>
+
+<h3>Helpers</h3>
+
+<p>Los <code>dynamicHelpers</code> te ayudan a definir una puente entre el cliente y el servidor, para crear variables o funciones que esten disponibles en ambos lados (mediante jade o ?). Hay dos formas de habilitar este middleware, uno de ellos es:</p>
+
+<p>Dentro de <code>app.configure()</code>:</p>
+
+<pre><code>app.helpers(require('./path/to/helpers'));
+</code></pre>
+
+<p>En este caso <code>./path/to/helpers</code> podria ser como este <a href="https://gist.github.com/1654130" title="Ejemplo de un dynamicHelpers ">archivo</a>
+O en cualquier otra parte de <code>app.js</code></p>
+
+<pre><code>app.dynamicHelpers({
+  sitename: function(){
+    return 'NOMBRE-DEL-APP'
+  }
+});
+</code></pre>
+
+<p>Los <code>dynamicHelpers</code> es un objeto pero cada uno de sus miembros son siempre funciones, por eso es necesario el <code>return 'NOMBRE'</code>.</p>
+
+<h3>Error Handler</h3>
+
+<p><a href="http://expressjs.com" title="npm install express -g">Express</a> provee tambien de un sistema de errores:</p>
+
+<pre><code>app.error(function(err, req, res, next){
+  if (err) {
+    // Hacer algo con el error
+  } else {
+    next();
+  }
+});
+</code></pre>
+
+<p>Funciona tambien mediante: <code>app.use(function(err,req,res,next){})</code> </p>
+
+<h3>Sessiones</h3>
+
+<p>Para habilitar las sessiones es necesario hacer lo siguiente:</p>
+
+<pre><code>app.configure(function(){
+  app.use(express.bodyParser())
+  app.use(express.cookieParser('nhispano'))
+  app.use(express.session({secret: 'SECRET', store: store }))
+});
+</code></pre>
+
+<p>Particularmente, he encontrado errores al utilizar este metodo por lo tanto yo hago lo siguiente:</p>
+
+<pre><code>var app = module.exports.app = process.app =  express.createServer(
+  //small hack for make sessions works just fine
+  express.bodyParser(),
+  express.cookieParser('nhispano'),
+  express.session({secret: 'Node Hispano', store: store }),
+);
+</code></pre>
+
+<p>Luego de activar el middleware <code>session</code>, un nuevo objeto es creado en cada <code>request</code> y se puede acceder a él mediante: <code>req.session</code>.</p>
+
+<p>Un modulo muy importante es <code>connect-redis</code> si usas redis, o <code>connect-couchdb</code> si usas couchDB, ambos disponibles mediante <code>npm install NombreDelPaquete</code>, los cuales te permiten manejar una cantidad mayor de sessiones al mismo tiempo.</p>
+
+<h3>Respuesta</h3>
+
+<p>El método (?) response, tiene una gran cantidad de funciones y otros métodos disponibles. Por ejemplo:</p>
+
+<h4><code>res.sendfile('/path/to/archivo')</code></h4>
+
+<p>Envia un archivo directamente al usuario, muy útil para enviar archivos html directamente.</p>
+
+<h4><code>res.json(DATA)</code></h4>
+
+<p>Envia como respuesta un documento en formato <code>json</code>.</p>
+
+<h4><code>res.write()</code></h4>
+
+<p>Escribe información al cliente que hizo la petición, se puede utilizar multiples veces en una misma petición:</p>
+
+<pre><code>req.write('&lt;h1&gt;Hola&lt;/h1&gt;');
+req.write('&lt;h2&gt;mundo&lt;/h2');
+</code></pre>
+
+<h4><code>res.send()</code></h4>
+
+<p>Es un método primario y se puede utilizar múltiples veces tambien.</p>
+
+<pre><code> res.send(); // 204
+ res.send(new Buffer('wahoo'));
+ res.send({ some: 'json' });
+ res.send('&lt;p&gt;some html&lt;/p&gt;');
+ res.send('Sorry, cant find that', 404);
+ res.send('text', { 'Content-Type': 'text/plain' }, 201);
+ res.send(404);
+</code></pre>
+
+<h4><code>res.writeHeader(CODE,Content-type)</code></h4>
+
+<p>Define el tipo de datos de la respuesta por ejemplo si usas <code>res.write()</code> con html como el ejemplo anterior, ocupas definir el tipo de contenido. <code>{"Content-type","text/html"}</code></p>
+
+<h4><code>res.contentType(type)</code></h4>
+
+<p>Al igual que <code>res.writeHeader()</code> nada más que en este caso solo pasas él Content-type.</p>
+
+<h4><code>res.redirect()</code></h4>
+
+<p>¿es necesario decir algo?</p>
+
+<h4><code>res.render</code></h4>
+
+<p>Define y renderiza una <code>template</code> o <code>layout</code>, el uso más comun es el siguiente:</p>
+
+<pre><code>res.render('TEMPLATE', {
+  // variables locales de TEMPLATE
+  layout: false, // por default busca dentro de views archivo llamado `layout.jade|ejs`,
+  nombre: 'NOMBRE'
+})
+</code></pre>
+
+<h4><code>res.end()</code></h4>
+
+<p>Termina la respuesta. Necesaria al utilizar <code>res.write</code>, <code>res.send</code>.</p>
+
+<h2>En Conclusión</h2>
+
+<p>El primer commit de express data del <a href="https://github.com/visionmedia/express/graphs/impact">21 de Junio del 2009</a>, lo cual lo hace muy maduro y sorprendentemente estable y robusto. Además el API que proporciona es muy fácil de entender y manejar, te ahorra tiempo y te ayuda en tu desarrollo. Hay mucho que decir acerca de express, pero lo más sencillo es que tú abras tu editor de texto y empieces a escribir codigo, y hacer <code>console.log()</code> por todos lados para ver como funciona y que otros métodos proporciona además de los mencionados aquí. Si tienes más links que compartir deja tu comentario. Da un follow a <a href="http://twitter/nodehispano">nodehispano</a> y mantente pendiente de esta página.</p>
+
+<h2>Links Recomendados</h2>
+
+<ul>
+<li><a href="http://expressjs.com/guide.html">Documentación de Express</a></li>
+<li>
+<a href="http://blog.koalite.com/2011/11/tutorial-node-js-express-jquery-i-creando-la-aplicacion/">Koalite Blog</a>: Ejemplo de una aplicación usando express.</li>
+<li>
+<a href="http://nodetuts.com/tutorials/12-file-uploads-using-nodejs-and-express.html">NodeTuts</a> Subiendo archivos con node.js y express.</li>
+<li>
+<a href="http://geekli.st">geekli.st</a>: Escrito en node.js y express</li>
+<li><a href="http://groups.google.com/group/express-js">Google Group de Express</a></li>
+</ul><p>Si eres mexicano, <a href="http://twitter.com/pinguxx">Ivan Torres (pinguxx)</a> ha creado un <a href="https://groups.google.com/group/nodejs-mexico">grupo</a>.</p>
+
+<p><em>disclaimer:</em> Este blog muy pronto estara en actualización, ya que express 3.0 esta por llegar.</p></div>
+</body>
+</html>
