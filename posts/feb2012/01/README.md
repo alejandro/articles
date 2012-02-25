@@ -133,7 +133,6 @@ Este método utiliza algo llamado [Immediately-Invoked Function Expression (IIFE
 
     var ut = function(array){
       this.array = array;
-      return this;
     }
     ut.prototype.max = function(){  
       var a = this.array.sort();
