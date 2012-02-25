@@ -129,7 +129,7 @@ Este es el método más común y mas rápido. Como te has de haber dado cuenta e
       return ut;
     })(typeof exports === "undefined" ? utilidades = {} : exports);
 
-Este método utiliza algo llamado [Immediately-Invoked Function Expression (IIFE)](http://benalman.com/news/2010/11/immediately-invoked-function-expression/) y particularmente es la que más me gusta. Y todavía hay 2 formas más, pero voy explicar la más sencilla:
+Este método utiliza algo llamado [Immediately-Invoked Function Expression (IIFE)](http://benalman.com/news/2010/11/immediately-invoked-function-expression/) y particularmente es la que más me gusta. Además corre en tu navegador (<F12> copy/paste). Todavía hay 2 formas más, pero voy explicar la más sencilla:
 
     var ut = function(array){
       this.array = array;
