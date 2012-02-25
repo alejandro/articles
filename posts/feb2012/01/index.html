@@ -1,9 +1,3 @@
-<doctype html>
-<html>
-<head>
-<title>Creando módulos con node.js</title>
-</head>
-<body>
 <article class="markdown-body"><h1>Creando módulos con node.js</h1>
 
 <p><em>disclaimer</em>: Este articulo posee muchas opiniones personales, así que <em>pardon me</em> de antemano.</p>
@@ -146,11 +140,10 @@ var unique = module.exports.unique = function(array){
 })(typeof exports === "undefined" ? utilidades = {} : exports);
 </code></pre>
 
-<p>Este método utiliza algo llamado <a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression/">Immediately-Invoked Function Expression (IIFE)</a> y particularmente es la que más me gusta. Y todavía hay 2 formas más, pero voy explicar la más sencilla:</p>
+<p>Este método utiliza algo llamado <a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression/">Immediately-Invoked Function Expression (IIFE)</a> y particularmente es la que más me gusta. Además corre en tu navegador ( copy/paste). Todavía hay 2 formas más, pero voy explicar la más sencilla:</p>
 
 <pre><code>var ut = function(array){
   this.array = array;
-  return this;
 }
 ut.prototype.max = function(){  
   var a = this.array.sort();
@@ -169,7 +162,14 @@ ut.prototype.unique = function(){
 module.exports = exports = ut;
 </code></pre>
 
-<p>Y las 3 tendrán las mismas utilidades. Las primeras dos se pueden utilizar como sigue:</p>
+<p>Este último método utiliza <code>prototype</code>, como pueden ver estamos extendiendo las propiedades del Array inicial, obteniendo los metodos. En este caso es necesario inicializar el objeto a evaluar con <code>new METHOD(Array)</code>. Este método es muy útil. Si hago un <code>require('./utilidades')</code> me loguea <code>[Function]</code>. A excepción de los dos anteriores que me muestran lo siguiente: </p>
+
+<pre><code>{ max: [Function],
+  min: [Function],
+  unique: [Function] }
+</code></pre>
+
+<p>Las 3 tendrán las mismas utilidades. Las primeras dos se pueden utilizar como sigue:</p>
 
 <pre><code>// superapp.js
 var u = require('./utilidades'); // asumiendo que esta en el mismo dir
@@ -180,7 +180,7 @@ console.log(u.min(test)); // =&gt; 0
 console.log(u.unique(test)); // =&gt; [0,2,3,4,5]
 </code></pre>
 
-<p>Y para la tercera:</p>
+<p>Y en la tercera:</p>
 
 <pre><code>// superapp.js
 var u = require('./utilidades'); 
@@ -218,4 +218,3 @@ console.log(test.unique()); // =&gt; [0,2,3,4,5]
 
 <h4>Viste algun error, mandanos una <a href="https://github.com/alejandromg/articles/tree/master/posts/feb2012/01">pull request</a>
 </h4></article>
-</body>
