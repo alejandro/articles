@@ -1,0 +1,221 @@
+<doctype html>
+<html>
+<head>
+<title>Creando módulos con node.js</title>
+</head>
+<body>
+<article class="markdown-body"><h1>Creando módulos con node.js</h1>
+
+<p><em>disclaimer</em>: Este articulo posee muchas opiniones personales, así que <em>pardon me</em> de antemano.</p>
+
+<p>Sin duda cuando una nueva tecnología como <a href="http://nodejs.org">node.js</a> es mostrada al mundo, como desarrollador te preguntas: <em>"¿Y hace esto, hace aquello?, ¿Es lo suficientemente rápido?."</em>  <em>"Mmm no, no lo hace, pero si hago esto y lo otro puedo una crear una extensión"</em>.</p>
+
+<p>Ya ha pasado, paso (a) con jQuery, Wordpress, etc., que mejor ejemplo que la n cantidad de lightbox's para jQuery o los plugins para facebook en Wordpress, hay gustos y sabores para todo lo que tu quieras. Solo piensa un momento y veras que es cierto.</p>
+
+<p>Bueno, pues a mi me gusta pensar que así surgió <a href="http://npmjs.org">NPM</a> (Node Package Manager), como una herramienta para unir los esfuerzos individuales de los miembros de la comunidad, y hacer de la misma, la comunidad más interesante y activa que personalmente yo conozco. Claro, agregado a otros factores que ayudaron y han ayudado a hacer más atractivo el trabajar con node.js. </p>
+
+<p>A inicios de esta semana, estaba buscando un <strong>xml parser</strong> (no pregunten para que), y me costo un poco encontrar uno que estuviera suficientemente documentado y que realizara lo que yo necesitaba, pero me di cuenta de cuan difícil era decirme por alguno. En adicción, soy de las personas que leen el código, van a github, o lo instala localmente, que trata de entender como funciona, estoy entre <a href="http://github.com">github</a> y <a href="search.npmjs.org">search.npmjs.org</a> y así, voy y vengo. TL-DR. De igaul forma así como surgió <a href="http://npmdoc.jit.su">NPM Docs</a>, humildemente escrita por su servidor.</p>
+
+<p>Pero este articulo no se trata de lo que hice, si no de lo que me encontré con el registro de NPM y pensé en como mejorar esta situación, o al menos <em>"evangelizar"</em> de un estilo unificado para escribir módulos.</p>
+
+<p>NPM cuenta con cerca de 7350 módulos y sigue en constante crecimiento, y lo más interesante es que la mayoría cuenta con una organización y estructura totalmente diferente, desde el <code>package.json</code> hasta el esqueleto del folder contenedor, elegidos totalmente al azar. <em>No lo llamaría un desorden de, pero si no una forma no muy agradable de los mismos</em>. Así que luego de esta larga introducción déjeme hablarles de  <strong>Como crear módulos para node.js</strong></p>
+
+<h2>La estructura</h2>
+
+<p>Ya hace días, cree una módulo exactamente para esto: <a href="http://npmdoc.jit.su/package/kronos">Kronos</a>, kronos inicializa una repo, con la estructura mínima y necesaria para la creación de un modulo. Kronos lo puedes installar con <code>npm install -g kronos</code>.</p>
+
+<p>Una estructura modelo seria como sigue:</p>
+
+<pre><code>Nombre del módulo
+ \
+  |- lib/
+      \
+       |- PROJECTNAME.js
+  |- bin/
+      \
+       |- BINFILE
+  |- examples/
+  |- test/
+  |- index.js
+  |- package.json
+  |- README.md
+</code></pre>
+
+<p>Esta es una estructura que define el diseño promedio de los módulos escritos en|para node.js, cerca del 80% esta conformado de esta manera o un modelo similar.</p>
+
+<p>Si te fijas en el diagrama, puedes ver esta compuesto de cuatro carpetas, dentro de <strong>lib</strong> se encuentra el *.js principal, no en el directorio raiz, sino que esta dentro de lib, aqui van tambien cada uno los *.js que hacen funcionar tu módulo. Si tu estas escribiendo un app para la CLI pones dentro de <em>bin</em> tu ejecutable. Y las otras carpetas son obvias: test y ejemplos. </p>
+
+<h3>package.json</h3>
+
+<p>Algo muy interesante es el <code>package.json</code>, NPM lo ha convertido en archivo imprescindible en el desarrollo de las aplicación pues es a través de él que tu se instalan las dependencias de tú aplicación. Sin duda una lectura recomendada es este <a href="http://package.json.nodejitsu.com">cheatsheet</a>, quien explica como debe estar escrito este documento. Pero siguiente con nuestro ejemplo, el package.json de kronos es el <a href="https://github.com/alejandromg/kronos/blob/master/package.json">siguiente</a>:</p>
+
+<pre><code>{
+  "name":"kronos",
+  "version":"0.0.2",
+  "description":"A dead simple scheme maker to initialize and setup your new project",
+  "author":"Alejandro Morales",
+  "preferGlobal": "true", // Instalar global
+  "dependencies":{
+    "commander":"0.5.x",
+    "mkdirp":"0.2.x"
+  },
+  "bin": {
+    "kronos": "./bin/kronos"
+  },
+ "main": "./lib/kronos",
+...
+</code></pre>
+
+<p>}</p>
+
+<p>Aquí están especificados todas la información necesaria que NPM toma al momento de publicarla e instalarla.</p>
+
+<h3>README.md</h3>
+
+<p>La parte pública, la más importante de lo que haces, puede que no seas un gran escritor o que detestes escribir documentación, pero es de alta relevancia que lo hagas. Créeme. </p>
+
+<p>Documentos: </p>
+
+<ul>
+<li><a href="http://blog.nodejitsu.com/how-to-write-a-readme">How to write a Readme</a></li>
+<li><a href="https://gist.github.com/1363524">Outline:: How to readme</a></li>
+</ul><h2>Del Módulo</h2>
+
+<h3><code>module.exports</code></h3>
+
+<p>Un módulo, no necesariamente necesita ser del dominio público, puede que lo que tu quieras es organizar tu código en varios archivos, y ocupas hacer un "require" debes en cuando, o tu módulo cumple una utilidad muy especifica en la aplicación. Es ahí donde las buenas practicas entran en acción. El uso de module.exports y el scope en el que ejecutas tu extensión|módulo.</p>
+<blockquote>
+<p><a href="http://commonjs.org/">CommonJS</a>, es un esfuerzo por parte de la comunidad para estandarizar el empaquetamiento de librerías en javascript, comúnmente conocidas como módulos. Los módulos son escritos en cumplimiento de este estandar, proveyendo gran portabilidad a otros frameworks como narwhal o inclusive los navegadores.</p>
+
+<p>TJ Holowaychuk - <a href="http://visionmedia.github.com/masteringnode/book.html">Mastering Node</a></p>
+</blockquote>
+<p>Y es así, como module.xxxxx surge. Un ejemplo muy sencillo, (escrito a propósito para este articulo),  es un módulo con operaciones básicas de un Array númerica: max, min y unique.</p>
+
+<p><code>module.exports</code> es el punto de referencia que es llamado cuando tu haces <code>var http = require('http')</code>, en este caso, node.js busca al objeto <code>exports</code> o <code>module.exports</code> exponiendo todos los métodos y funciones contenidas en ella. </p>
+
+<p>Los siguientes ejemplos son validos:</p>
+
+<pre><code>module.exports.PI = Math.PI;
+module.exports.SQRT2 = Math.SQRT2;
+</code></pre>
+
+<p>También:</p>
+
+<pre><code>var miFuncion = function(){
+ ....
+}
+module.exports = miFuncion;
+</code></pre>
+
+<p>Ahora miremos las diferentes formas de escribir módulos. La primer forma que vamos a ver es la que sigue:
+Simple y sin muchas complicaciones, <code>variable = module.exports = valor|función</code></p>
+
+<pre><code>// utilidades.js
+var max = module.exports.max = function(array){
+  var a = array.sort();
+  return a[a.length-1];
+}
+var min = module.exports.min = function(array){
+  var a = array.sort();
+  return a[0];
+}
+var unique = module.exports.unique = function(array){
+  return array.filter(function(v, i, a) { 
+                 return a.lastIndexOf(v) === i; })
+             .sort();
+}
+</code></pre>
+
+<p>Este es el método más común y mas rápido. Como te has de haber dado cuenta este código correría tanto en el server como en el browser, claro realizando algunos cambios y haciéndola un poco más atractiva:</p>
+
+<pre><code>(function(ut){
+  ut.max = function(array){
+    var a = array.sort();
+    return a[a.length-1];
+  };
+  ut.min = function(array){
+    var a = array.sort();
+    return a[0];
+  };
+  ut.unique = function(array){
+    return array.filter(function(v, i, a) { 
+                  return a.lastIndexOf(v) === i; })
+                .sort();
+  }
+  return ut;
+})(typeof exports === "undefined" ? utilidades = {} : exports);
+</code></pre>
+
+<p>Este método utiliza algo llamado <a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression/">Immediately-Invoked Function Expression (IIFE)</a> y particularmente es la que más me gusta. Y todavía hay 2 formas más, pero voy explicar la más sencilla:</p>
+
+<pre><code>var ut = function(array){
+  this.array = array;
+  return this;
+}
+ut.prototype.max = function(){  
+  var a = this.array.sort();
+  return a[a.length-1];
+};
+ut.prototype.min = function(){  
+  var a = this.array.sort();
+  return a[0];
+};
+ut.prototype.unique = function(){  
+  return this.array.filter(function(v, i, a) { 
+                      return a.lastIndexOf(v) === i; })
+                    .sort();
+};
+
+module.exports = exports = ut;
+</code></pre>
+
+<p>Y las 3 tendrán las mismas utilidades. Las primeras dos se pueden utilizar como sigue:</p>
+
+<pre><code>// superapp.js
+var u = require('./utilidades'); // asumiendo que esta en el mismo dir
+var test = [0,3,4,5,4,3,4,2];
+
+console.log(u.max(test)); // =&gt; 5
+console.log(u.min(test)); // =&gt; 0
+console.log(u.unique(test)); // =&gt; [0,2,3,4,5]
+</code></pre>
+
+<p>Y para la tercera:</p>
+
+<pre><code>// superapp.js
+var u = require('./utilidades'); 
+var test = new u([0,3,4,5,4,3,4,2]);
+
+console.log(test.min()) //=&gt; 0
+console.log(test.max()) //=&gt; 5
+console.log(test.unique()); // =&gt; [0,2,3,4,5]
+</code></pre>
+
+<p>Como puedes, ver la tercera utiliza un método más interesante y definitivamente más útil, ya que te ocupa unos cuantos caracteres menos y es más entendible.</p>
+
+<p>En todos los ejemplos, utilice un forma distinta de exportar el código externo, mediante <code>module.exports</code>, cada uno en un contexto diferente. Cada uno tiene sus ventajas y desventajas, pero si hay algo que tienes que tener cuidado es en el de respetar tu <code>namespace</code> para evitar conflictos y bugs indeseables. Elije nombres y descriptores aceptables y únicos. Con aceptables me refiero, a nombres que no vayan a entrar en conflicto, o que son keywords de javascript.</p>
+
+<h3>En conclusión</h3>
+
+<p>Si escribes módulos para el dominio público, ten en cuenta, la documentación (README) correcta de la misma, un <strong>package.json</strong> bien escrito, y un código limpio. Recuerda: <strong>Don't Repeat Yourself</strong>.</p>
+
+<h3>Links Recomendados:</h3>
+
+<ul>
+<li>
+<a href="http://howtonode.org/how-to-module">How to Module</a> por Isaac Z. Schlueter (el actuar <strong>"gatekeeper"</strong> de node.js)</li>
+<li><a href="https://gist.github.com/650000">Add AMD /define() to node.js </a></li>
+<li><a href="http://nodetuts.com/tutorials/17-building-nodejs-modules.html">Building node.js modules</a></li>
+<li>
+<a href="http://blog.mixu.net/2011/02/02/essential-node-js-patterns-and-snippets/">Essential node.js patterns and snippets</a> *<strong>Recomendado</strong>
+</li>
+<li><a href="http://blog.nodejitsu.com/6-must-have-nodejs-modules">6 must have node.js modules</a></li>
+<li><a href="http://blog.nodejitsu.com/how-to-write-a-readme">How to write a Readme</a></li>
+<li><a href="https://gist.github.com/1363524">Outline:: How to readme</a></li>
+<li> <a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression/">Immediately-Invoked Function Expression (IIFE)</a> </li>
+<li><a href="http://npmdoc.jit.su">NPM Docs</a></li>
+</ul><h3><a href="https://gist.github.com/1906467">Código en este articulo</a></h3>
+
+<h4>Viste algun error, mandanos una <a href="https://github.com/alejandromg/articles/tree/master/posts/feb2012/01">pull request</a>
+</h4></article>
+</body>
