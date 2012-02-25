@@ -2,16 +2,22 @@
 
 _disclaimer_: Este articulo posee muchas opiniones personales, así que _pardon me_ de antemano.
 
-Sin duda cuando una nueva tecnología como [node.js](http://nodejs.org) es mostrada al mundo, como desarrollador te preguntas: "¿Y hace esto, hace aquello?, ¿Es lo suficientemente rápido?. Mmm no, no lo hace, pero si hago esto y lo otro puedo una crear una extensión". Ya ha pasado, paso(a) con jQuery, Wordpress, etc., que mejor ejemplo que el decirte que hay un plugin jQuery/Wordpress para lo que tu quieras. Solo piensa un momento y veras que es cierto.
+Sin duda cuando una nueva tecnología como [node.js](http://nodejs.org) es mostrada al mundo, como desarrollador te preguntas: *"¿Y hace esto, hace aquello?, ¿Es lo suficientemente rápido?."*  *"Mmm no, no lo hace, pero si hago esto y lo otro puedo una crear una extensión"*.
+
+Ya ha pasado, paso (a) con jQuery, Wordpress, etc., que mejor ejemplo que la n cantidad de lightbox's para jQuery o los plugins para facebook en Wordpress, hay gustos y sabores para todo lo que tu quieras. Solo piensa un momento y veras que es cierto.
 
 Bueno, pues a mi me gusta pensar que así surgió [NPM](http://npmjs.org) (Node Package Manager), como una herramienta para unir los esfuerzos individuales de los miembros de la comunidad, y hacer de la misma, la comunidad más interesante y activa que personalmente yo conozco. Claro, agregado a otros factores que ayudaron y han ayudado a hacer más atractivo el trabajar con node.js. 
 
-A inicios de esta semana, estaba buscando un **xml parser** (no pregunten para que), y me costo un poco encontrar uno que estuviera suficientemente documentado y que realizara lo que yo necesitaba, pero me di cuenta de cuan difícil era decirme por alguno, además soy de los que trata de entender el código que hace funcionar X módulo, voy a github regreso a search.npmjs.org y así voy y vengo, bueno larga historia pero es así como surgio [NPM Docs](http://npmdoc.jit.su).
+A inicios de esta semana, estaba buscando un **xml parser** (no pregunten para que), y me costo un poco encontrar uno que estuviera suficientemente documentado y que realizara lo que yo necesitaba, pero me di cuenta de cuan difícil era decirme por alguno. En adicción, soy de las personas que leen el código, van a github, o lo instala localmente, que trata de entender como funciona, estoy entre [github](http://github.com) y [search.npmjs.org](search.npmjs.org) y así, voy y vengo. TL-DR. De igaul forma así como surgió [NPM Docs](http://npmdoc.jit.su), humildemente escrita por su servidor.
 
-Pero este articulo no se trata de lo que hice, si no de lo que me encontré con el registro de NPM y como mejorar esta situación. NPM cuenta con cerca de 7350 módulos y en constante crecimiento, la mayoría con una organización y estructura totalmente diferente, desde el `package.json` hasta el esqueleto del folder contenedor. No lo llamaría un desorden pero si no una forma no muy agradable de los mismos. Así que luego de esta larga introducción dejeme introducir **Como crear módulos para node.js**
+Pero este articulo no se trata de lo que hice, si no de lo que me encontré con el registro de NPM y pensé en como mejorar esta situación, o al menos *"evangelizar"* de un estilo unificado para escribir módulos.
+
+NPM cuenta con cerca de 7350 módulos y sigue en constante crecimiento, y lo más interesante es que la mayoría cuenta con una organización y estructura totalmente diferente, desde el `package.json` hasta el esqueleto del folder contenedor, elegidos totalmente al azar. *No lo llamaría un desorden de, pero si no una forma no muy agradable de los mismos*. Así que luego de esta larga introducción déjeme hablarles de  **Como crear módulos para node.js**
 
 ## La estructura
-Ya hace días, cree una módulo exactamente para esto: [Kronos](http://npmdoc.jit.su/package/kronos), para crear la estructura esperada de un modulo, Kronos lo puedes installar con `npm install -g kronos`. Una estructura modelo seria como sigue:
+Ya hace días, cree una módulo exactamente para esto: [Kronos](http://npmdoc.jit.su/package/kronos), kronos inicializa una repo, con la estructura mínima y necesaria para la creación de un modulo. Kronos lo puedes installar con `npm install -g kronos`.
+
+Una estructura modelo seria como sigue:
 
     Nombre del módulo
      \
@@ -27,10 +33,9 @@ Ya hace días, cree una módulo exactamente para esto: [Kronos](http://npmdoc.ji
       |- package.json
       |- README.md
 
-Esta es una estructura que define el diseño promedio de los módulos escritos en|para node.js.
+Esta es una estructura que define el diseño promedio de los módulos escritos en|para node.js, cerca del 80% esta conformado de esta manera o un modelo similar.
 
-Como puedes ver esta compuesto de cuatro carpetas, dentro de **lib** se encuentra 
-el *.js principal, no en el directorio raiz, sino que esta dentro de lib, aqui van tambien cada uno los *.js que hacen funcionar tu módulo. Si tu estas escribiendo un app para la CLI pones dentro de _bin_ tu ejecutable. Y las otras carpetas son obvias: test y ejemplos. 
+Si te fijas en el diagrama, puedes ver esta compuesto de cuatro carpetas, dentro de **lib** se encuentra el *.js principal, no en el directorio raiz, sino que esta dentro de lib, aqui van tambien cada uno los *.js que hacen funcionar tu módulo. Si tu estas escribiendo un app para la CLI pones dentro de _bin_ tu ejecutable. Y las otras carpetas son obvias: test y ejemplos. 
 
 ### package.json
 Algo muy interesante es el `package.json`, NPM lo ha convertido en archivo imprescindible en el desarrollo de las aplicación pues es a través de él que tu se instalan las dependencias de tú aplicación. Sin duda una lectura recomendada es este [cheatsheet](http://package.json.nodejitsu.com), quien explica como debe estar escrito este documento. Pero siguiente con nuestro ejemplo, el package.json de kronos es el [siguiente](https://github.com/alejandromg/kronos/blob/master/package.json):
@@ -52,7 +57,7 @@ Algo muy interesante es el `package.json`, NPM lo ha convertido en archivo impre
     ...
    }
 
-Aqui estan especificados todas la información necesaria que NPM toma al momento de publicarla e instalarla.
+Aquí están especificados todas la información necesaria que NPM toma al momento de publicarla e instalarla.
 
 ###README.md
 La parte pública, la más importante de lo que haces, puede que no seas un gran escritor o que detestes escribir documentación, pero es de alta relevancia que lo hagas. Créeme. 
@@ -71,7 +76,7 @@ Un módulo, no necesariamente necesita ser del dominio público, puede que lo qu
 
 > TJ Holowaychuk - [Mastering Node](http://visionmedia.github.com/masteringnode/book.html)
 
-Y es así, como module.xxxxx surge. Un ejemplo muy sencillo, (escrito a propósito para este articulo),  es un módulo con operaciones básicas de un array númerica: max, min y unique.
+Y es así, como module.xxxxx surge. Un ejemplo muy sencillo, (escrito a propósito para este articulo),  es un módulo con operaciones básicas de un Array númerica: max, min y unique.
 
 `module.exports` es el punto de referencia que es llamado cuando tu haces `var http = require('http')`, en este caso, node.js busca al objeto `exports` o `module.exports` exponiendo todos los métodos y funciones contenidas en ella. 
 
@@ -188,3 +193,4 @@ Si escribes módulos para el dominio público, ten en cuenta, la documentación 
 - [NPM Docs](http://npmdoc.jit.su)
 
 ### [Código en este articulo](https://gist.github.com/1906467)
+#### Viste algun error, mandanos una [pull request](https://github.com/alejandromg/articles/tree/master/posts/feb2012/01)
