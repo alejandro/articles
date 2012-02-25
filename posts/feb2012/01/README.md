@@ -151,7 +151,13 @@ Este método utiliza algo llamado [Immediately-Invoked Function Expression (IIFE
 
     module.exports = exports = ut;
 
-Y las 3 tendrán las mismas utilidades. Las primeras dos se pueden utilizar como sigue:
+Este último método utiliza `prototype`, como pueden ver estamos extendiendo las propiedades del Array inicial, obteniendo los metodos. En este caso es necesario inicializar el objeto a evaluar con `new METHOD(Array)`. Este método es muy útil. Si hago un `require('./utilidades')` me loguea `[Function]`. A excepción de los dos anteriores que me muestran lo siguiente: 
+
+    { max: [Function],
+      min: [Function],
+      unique: [Function] }
+
+Las 3 tendrán las mismas utilidades. Las primeras dos se pueden utilizar como sigue:
    
     // superapp.js
     var u = require('./utilidades'); // asumiendo que esta en el mismo dir
@@ -161,7 +167,7 @@ Y las 3 tendrán las mismas utilidades. Las primeras dos se pueden utilizar como
     console.log(u.min(test)); // => 0
     console.log(u.unique(test)); // => [0,2,3,4,5]
 
-Y para la tercera:
+Y en la tercera:
    
     // superapp.js
     var u = require('./utilidades'); 
