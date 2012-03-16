@@ -104,7 +104,10 @@ app.get('/posts/:year/:month/:id',function(req,res){
         res.write('<article class="markdown-body">')
         res.write(post)
         res.write('</article>')
-        res.end('</body></html>');
+        res.write('<p style="text-align:center"> Did you find a typo? Send a <a href="//github.com/alejandromg/articles/tree/master/posts/'+re+'/'+id+'"> Pull request</a></p>')
+        res.write('<footer>Archive made by <a href="//alejandromorales.co.cc">Alejandro Morales</a></footer>')
+  res.end('</body></html>');
+        res.end();
       }
     });
   } else {
@@ -144,6 +147,6 @@ function isMember(array,path){
   });
   return f;
 }
-app.listen(process.env.PORT || 8080);
+app.listen(process.env['app_port'] || 8080);
 console.log('Server on port: %s \non: %s ',app.address().port,app.settings.env);
 

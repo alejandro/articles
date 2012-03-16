@@ -1,0 +1,176 @@
+<h1>Common problems and questions that you can find deploying to nodester</h1>
+
+<p>I heard that you have a problem, let me say this clear, when you create an app in our platform, you can run into a pile of problems, mostly because bad configuration of your environment, or our cli tool doesn't read them correctly. But most of them are not related to our platform. </p>
+
+<h3>Git issues</h3>
+
+<p>Nodester runs a <code>git</code> server, so by default you need to have installed git locally. To add the remote repo you need to do this:</p>
+
+<pre><code>&gt; nodester app create APPNAME index.js
+... logs
+# for a clean installation
+&gt; nodester app init APPNAME
+# for and existed app
+&gt; nodester app info APPNAME
+.... logs
+ git-repo url: git@nodester.com:/node/git/alejandromg/APP_ID.git
+&gt; git remote add nodester git@nodester.com:/node/git/alejandromg/APP_ID.git
+</code></pre>
+
+<p>Then you need to commit your changes and finally:</p>
+
+<pre><code>&gt; git push nodester master
+</code></pre>
+
+<p>This command is going to push your changes and to restart the app. If you have dependencies run <code>nodester npm install APPNAME</code>. And that's all.</p>
+
+<p>Wait but what about:</p>
+
+<pre><code>fatal: The remote end hung up unexpectedly
+</code></pre>
+
+<p>Many things can be causing this error, but it's more often because your <a href="#a">RSA keys</a></p>
+
+<h3>The port is already in use</h3>
+
+<p>Well this is a easy one, just add the next param to your listen method in your server. Nodester creates a global variable for each app, where resides the port that we assign to your app. This key-value is <code>process.env['app_port']</code>. You can fix it doing this:</p>
+
+<pre><code>http.createServer(function(req,res){
+...
+}).listen(process.env['app_port'] || 3000);
+</code></pre>
+
+<p>In this case, you don't need to be worried about running locally or in nodester. It'll just work.</p>
+
+<p><a name="a"></p>
+
+<h3>RSA problems</h3>
+
+<p>One of the mos interesting and recurrent problems is because of your RSA public key. You need to setup your key with our server in order to have access to it. 
+There is no better explanation than this:</p>
+
+<ul>
+<li><a href="http://help.github.com/mac-set-up-git/">unix setup</a></li>
+<li><a href="http://help.github.com/win-set-up-git">windows Setup</a></li>
+</ul>
+
+<p>Windows users are going to have a bad time using git, we recommend you to install PowerShell or something alike, since we have reports saying that it works fine. Also would be a great adition that you have installed <code>CURL</code> just to have access to the RESP API in case that our cli tool, won't work as expected.</p>
+
+<h3>File doesn't exists</h3>
+
+<p>Assumming that you have a code like this:</p>
+
+<pre><code>var file = path.normalize('./db/test.json');
+fs.readFile(file, toWrite,'utf8', function (err) {
+  ....
+});
+</code></pre>
+
+<p>You need to change it the first line by:</p>
+
+<pre><code>var file = path.normalize(__dirname, '/db/test.json');
+</code></pre>
+
+<p>nodester needs absolute paths to work correctly.</p>
+
+<h3>Websockets and nodester</h3>
+
+<p>Yes you can have websockets on nodester, but we recommend you to read this article:
+<a href="http://blog.nodester.com/post/3634535277/running-websockets-on-nodester">Running websockets on nodester</a></p>
+
+<h3>node.js versions</h3>
+
+<p>If you didn't know we are running 0.4.9, 0.4.12 and 0.6.12. But by default all the apps are going to run under 0.4.9 at least that you especified the version:</p>
+
+<pre><code>{
+  "name": "myAwesomeAPPName",
+  "description": "Description about it",
+  "version": "0...",
+  "dependencies":{
+    "dependency1":"0.1.1"
+    "dependency2":"0.1.2"
+  },
+  "node":"0.6.12"
+}
+</code></pre>
+
+<p>The key is <code>node</code> and the available values are: '0.4.9','0.4.12','0.6.12'
+If you want to stay updated about which versions we are running:</p>
+
+<pre><code>&gt; curl -XGET http://nodester.com/env/versions 
+</code></pre>
+
+<p>It'll print the correct versions values.</p>
+
+<h3>About Databases</h3>
+
+<p>nodester is a Open Source Node.js Hosting Platform and that's all. No CouchDB, no Redis, no MySQL, no mongoDB, we try to offer you the best node.js hosting by free and all our efforts goes to that. </p>
+
+<p>But you can get db hosting for free with these amazing services: <a href="http://iriscouch.com">iriscouch</a>, <a href="http://cloudant.com">cloudant</a>, <a href="http://redistogo.com">redistogo</a>, <a href="http://mongolab.com">mongoLab</a> &amp; <a href="http://mongohq.com">mongoHQ</a> and many more. </p>
+
+<p>Then your database setup is easy, just read the documentation of the module that you are using to connect to your database.</p>
+
+<h3>Native modules</h3>
+
+<p>You're not allowed to install native modules, but you can request it on freenode#nodester, or @nodester. Currently we have installed <code>Cairo</code>, <code>libpng</code> and others (unity is on the way)</p>
+
+<h3>nodester-cli</h3>
+
+<p>Our cli utility is way to useful and let you go more quickly in the deployment flow.</p>
+
+<p>Basic commands are:</p>
+
+<pre><code>nodester app create APPNAME &lt;init_file.js&gt;
+</code></pre>
+
+<p>Most people don't pass the <code>&lt;init_file.js&gt;</code> param, so after when you try to deploy you'll get a error saying that there is no a init_file, by default nodester set it up to <code>server.js</code> in which is your server code.</p>
+
+<pre><code>nodester app logs APPNAME
+</code></pre>
+
+<p>Show the logs or every <code>console.log</code> that you put in your code, jf no APPNAME is passed a verbose error, will be show it up.</p>
+
+<pre><code>nodester app create|restart|delete|info|stop|start|clone &lt;params&gt;
+</code></pre>
+
+<p>Basically this is the most important command in the tool. This is where you lunch, delete, restart, create apps. Enough said.</p>
+
+<p>If you want more info about nodester-cli just put:<code>nodester</code> in your CLI and all the available information is going to be show it up.</p>
+
+<p><strong>Protip:</strong> If you didn't init your app ( via <code>nodester app init APPNAME</code>), because you had it already. You can avoid all the APPNAME params echoing this in your app root dir</p>
+
+<pre><code>&gt; echo "appname=APPNAME" &gt; .nodester.appconfig
+</code></pre>
+
+<p>In this case you don't need anymore to be specifing  your appname in every nodester-cli call.</p>
+
+<h3>Limits</h3>
+
+<p>Since this is a free service, we need to keep the quality of it. The standar for the apps limit are given my the RAM and storage in use, we give you 25MB of each. Rarely and app reach the limits, if your app has memory leaks or something like that, you better fix your code. Remember it's a free and shared instance, so don't abuse our resources. We host almost 5000 apps and there are running nearly 2500 apps. Also if you have empty or helloworld apps please delete them. </p>
+
+<h3>Buggy nodester is buggy</h3>
+
+<p>Do you think that maybe the problem is a bug or a major problem with the nodester core? <a href="https://github.com/nodester/nodester/issues">Fill a issue</a>.</p>
+
+<h2>Personal support</h2>
+
+<p>None of this is your problem? Contact us at:</p>
+
+<ul>
+<li>freenode#nodester or <a href="http://irc.nodester.com">irc.nodester.com</a>, the fastest and "face to face" solution (depends on who is on the channel)</li>
+<li><a href="http://twitter.com/nodester">@nodester</a></li>
+<li>You can also ask questions and provide feedback in our google group at <a href="http://groups.google.com/group/nodester">google#nodester</a></li>
+</ul>
+
+<p>We are glad to help you out.</p>
+
+<h3>Known problems</h3>
+
+<ul>
+<li><p>Until today, we are tracking some <code>EACCESS</code> errors, for those trying to write files to the server you better wait for it.</p></li>
+<li><p>node-v0.7.x shows <code>path.existsSync is deprecated. It is now called fs.existsSync</code>, we are going to fix this until a stable 0.7.x version. Because it's just a warning. Everything else works fine.</p></li>
+</ul>
+
+<h2>Hack the Planet \m/</h2>
+
+<p>If this project inspires you, please feel free to help out by forking this project and sending us pull requests! \m/ http://github.com/nodester</p>
