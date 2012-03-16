@@ -7,5 +7,6 @@
       "express":"2.5.x",
       "jade":"latest",
       "github-flavored-markdown": "1.0.x",
-    }
+    },
+    "node":"0.6.12"
 }
