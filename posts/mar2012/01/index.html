@@ -10,7 +10,7 @@
 ... logs
 # for a clean installation
 &gt; nodester app init APPNAME
-# for and existed app
+# for a local app; cd path/to/app;
 &gt; nodester app info APPNAME
 .... logs
  git-repo url: git@nodester.com:/node/git/alejandromg/APP_ID.git
@@ -42,11 +42,12 @@
 
 <p>In this case, you don't need to be worried about running locally or in nodester. It'll just work.</p>
 
-<p><a name="a"></p>
+<p><strong>Tip</strong>: use <code>nodester env get APPNAME</code> to know what are your environment variables
+<a name="a"></p>
 
 <h3>RSA problems</h3>
 
-<p>One of the mos interesting and recurrent problems is because of your RSA public key. You need to setup your key with our server in order to have access to it. 
+<p>One of the most interesting and recurrent problems is because of your RSA public key. You need to setup your key with our server in order to have access to it. 
 There is no better explanation than this:</p>
 
 <ul>
@@ -58,7 +59,25 @@ There is no better explanation than this:</p>
 
 <h3>File doesn't exists</h3>
 
-<p>Assumming that you have a code like this:</p>
+<p>Usually when you are reading a file you need to use absolute paths.</p>
+
+<p><strong>Incorrect:</strong></p>
+
+<pre><code>fs.readFileSync('./file')
+fs.readFileSync('../file')
+fs.readFileSync('../')
+</code></pre>
+
+<p>and more...</p>
+
+<p><strong>Correct</strong>:</p>
+
+<pre><code>fs.readFileSync(__dirname+'/file')
+fs.readFileSync(__dirname + '/../file')
+fs.readFileSync(__dirname + '/../')
+</code></pre>
+
+<p>e.g: Assumming that you have a code like this:</p>
 
 <pre><code>var file = path.normalize('./db/test.json');
 fs.readFile(file, toWrite,'utf8', function (err) {
@@ -146,7 +165,7 @@ If you want to stay updated about which versions we are running:</p>
 
 <h3>Limits</h3>
 
-<p>Since this is a free service, we need to keep the quality of it. The standar for the apps limit are given my the RAM and storage in use, we give you 25MB of each. Rarely and app reach the limits, if your app has memory leaks or something like that, you better fix your code. Remember it's a free and shared instance, so don't abuse our resources. We host almost 5000 apps and there are running nearly 2500 apps. Also if you have empty or helloworld apps please delete them. </p>
+<p>Since this is a free service, we need to keep the quality of it. The standard for the apps limit are given my the RAM and storage in use, we give you 25MB of each. Rarely and app reach the limits, if your app has memory leaks or something like that, you better fix your code. Remember it's a free and shared instance, so don't abuse our resources. We host almost 5000 apps and there are running nearly 2500 apps. Also if you have empty or helloworld apps please delete them. </p>
 
 <h3>Buggy nodester is buggy</h3>
 

@@ -11,7 +11,7 @@ Nodester runs a `git` server, so by default you need to have installed git local
     ... logs
     # for a clean installation
     > nodester app init APPNAME
-    # for and existed app
+    # for a local app; cd path/to/app;
     > nodester app info APPNAME
     .... logs
      git-repo url: git@nodester.com:/node/git/alejandromg/APP_ID.git
@@ -39,10 +39,11 @@ Well this is a easy one, just add the next param to your listen method in your s
 
 In this case, you don't need to be worried about running locally or in nodester. It'll just work.
 
+**Tip**: use `nodester env get APPNAME` to know what are your environment variables
 <a name="a">
 ### RSA problems
 
-One of the mos interesting and recurrent problems is because of your RSA public key. You need to setup your key with our server in order to have access to it. 
+One of the most interesting and recurrent problems is because of your RSA public key. You need to setup your key with our server in order to have access to it. 
 There is no better explanation than this:
  
  -  [unix setup](http://help.github.com/mac-set-up-git/)
@@ -52,7 +53,22 @@ Windows users are going to have a bad time using git, we recommend you to instal
  
 ### File doesn't exists
 
-Assumming that you have a code like this:
+Usually when you are reading a file you need to use absolute paths.
+
+**Incorrect:**
+
+    fs.readFileSync('./file')
+    fs.readFileSync('../file')
+    fs.readFileSync('../')
+and more...
+
+**Correct**:
+
+    fs.readFileSync(__dirname+'/file')
+    fs.readFileSync(__dirname + '/../file')
+    fs.readFileSync(__dirname + '/../')
+
+e.g: Assumming that you have a code like this:
 
     var file = path.normalize('./db/test.json');
     fs.readFile(file, toWrite,'utf8', function (err) {
@@ -134,7 +150,7 @@ In this case you don't need anymore to be specifing  your appname in every nodes
 
 ### Limits
 
-Since this is a free service, we need to keep the quality of it. The standar for the apps limit are given my the RAM and storage in use, we give you 25MB of each. Rarely and app reach the limits, if your app has memory leaks or something like that, you better fix your code. Remember it's a free and shared instance, so don't abuse our resources. We host almost 5000 apps and there are running nearly 2500 apps. Also if you have empty or helloworld apps please delete them. 
+Since this is a free service, we need to keep the quality of it. The standard for the apps limit are given my the RAM and storage in use, we give you 25MB of each. Rarely and app reach the limits, if your app has memory leaks or something like that, you better fix your code. Remember it's a free and shared instance, so don't abuse our resources. We host almost 5000 apps and there are running nearly 2500 apps. Also if you have empty or helloworld apps please delete them. 
 
 ### Buggy nodester is buggy
 Do you think that maybe the problem is a bug or a major problem with the nodester core? [Fill a issue](https://github.com/nodester/nodester/issues).
