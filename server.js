@@ -2,8 +2,7 @@ var express = require('express'),
     crypto = require('crypto'),
     url = require('url'),
     sys = require('util'),
-    app = module.exports =  express.createServer( express.cookieParser(),
-  express.session({ secret: 'keyboard cat' })),
+    app = module.exports =  express.createServer(),
     groups =[];
     var fs = require('fs');
     var path = require('path');
@@ -16,6 +15,7 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(__dirname+'/public'));
   app.use(express.methodOverride());
+  app.use(express.cookieParser());
   app.use(express.bodyParser());
 });
 app.configure('development', function(){

@@ -1,12 +1,12 @@
 {
     "name": "Articles",
+    "node":"0.6.12",
     "description": "This is the server for read the articles upon my db",
     "version": "0.1.0",
     "author": "Alejandro Morales",
     "dependencies": {
       "express":"2.5.x",
-      "jade":"latest",
-      "github-flavored-markdown": "1.0.x",
-    },
-    "node":"0.6.12"
+      "jade":"*",
+      "github-flavored-markdown": "1.0.x"
+    }    
 }
