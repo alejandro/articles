@@ -118,7 +118,8 @@ app.get('/posts/:year/:month/:id',function(req,res){
     });
   }
 });
-app.post('/login', function(req, res){
+app.get('/login', function(req, res){
+  res.render(__dirname+'/posts/mar2012/01/index.html')
 });
 // Regresa el index num de un valor en una array como el de un 
 // objeto objeto["VALOR"] -> array[indexOf(array,VALOR)]
