@@ -87,6 +87,10 @@ nodester needs absolute paths to work correctly.
 Yes you can have websockets on nodester, but we recommend you to read this article:
 [Running websockets on nodester](http://blog.nodester.com/post/3634535277/running-websockets-on-nodester)
 
+### nowjs
+
+If you are using [nowjs](http://nowjs.org)  read please about ["Variable Sync"](http://nowjs.org/doc/variables), this is needed in the nodester platform.
+
 ### node.js versions
 
 If you didn't know we are running 0.4.9, 0.4.12 and 0.6.12. But by default all the apps are going to run under 0.4.9 at least that you especified the version:
@@ -115,6 +119,40 @@ nodester is a Open Source Node.js Hosting Platform and that's all. No CouchDB, n
 But you can get db hosting for free with these amazing services: [iriscouch](http://iriscouch.com), [cloudant](http://cloudant.com), [redistogo](http://redistogo.com), [mongoLab](http://mongolab.com) & [mongoHQ](http://mongohq.com) and many more. 
 
 Then your database setup is easy, just read the documentation of the module that you are using to connect to your database.
+
+## Stylus 
+
+People using stylus encountered many problems compiling stylus checkout [#344](https://github.com/nodester/nodester/issues/344):
+> If I push the already compiled file (style.css), the first request will receive an Internal Server error, whilst the rest will return the already compiled copy (it isn't recompiled on Nodester, even if changes have been made to the .styl file). I'm using Stylus on Node 0.6.12.
+
+Then [@gotik](http://github.com/gotik) [commented](https://github.com/nodester/nodester/issues/344#issuecomment-5005474): 
+
+>Here is a piece of code I use for compile stylus, and works perfect in nodester:
+
+    var stylus = require('stylus');
+
+    .....
+
+    app.configure(function(){
+        app.set('views', __dirname + '/views');
+        app.set('view engine', 'jade');
+        app.use(express.bodyParser());
+        app.use(express.methodOverride());
+        app.use(express.cookieParser());
+        app.use(stylus.middleware({ 
+            src: __dirname + '/stylus',
+            dest: __dirname + '/public',
+            compile: function (str, path) {
+                return stylus(str)
+                    .set('filename', path)
+                    .set('compress', true)
+                    .use(nib())
+                    .import('nib');
+                }
+        }));    
+        app.use(app.router);
+
+    ....
 
 ### Native modules
 
