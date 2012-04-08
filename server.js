@@ -60,6 +60,12 @@ app.get('/', function(req, res){
   res.write('<footer>Archive made by <a href="//alejandromorales.co.cc">Alejandro Morales</a></footer>')
   res.end('</body></html>');
 });
+app.get('/myip',function(req,res){
+    var ip = req.connection.remoteAddress || req.socket.remoteAddress;
+    if (req.headers["x-real-ip"]) ip =req.headers["x-real-ip"];
+    console.log(ip)
+    res.end(ip)
+})
 var months = function(){
   return fs.readdirSync(path.join(__dirname,'/posts'));
 };
