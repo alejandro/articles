@@ -62,7 +62,7 @@ app.get('/', function(req, res){
 });
 app.get('/myip',function(req,res){
     var ip = req.connection.remoteAddress || req.socket.remoteAddress;
-    console.log(req.connection.remoteAddress '')
+    console.log(req.connection.remoteAddress|| '')
     console.log(req.socket.remoteAddress|| '')
     console.log(req.headers['x-real-ip'] || '')
     if (req.headers["x-real-ip"]) ip =req.headers["x-real-ip"];
