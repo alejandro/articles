@@ -159,6 +159,15 @@ function isMember(array,path){
 }
 app.listen(process.env['app_port'] || 8080);
 console.log('Server on port: %s \non: %s ',app.address().port,app.settings.env);
-require('child_process').spawn('/usr/bin/curl -XGET http://github.com/', function(e,d){
+
+var curl = require('child_process').spawn('/usr/bin/curl -XGET http://github.com')
+curl.stdout.on('data', function(e,d){
     console.log(e,d)
-    })
+});
+curl.stderr.on('data', function(e,d){
+    console.log(e,d)
+});
+
+curl.on('exit',function(e,d){
+    console.log(e,d)
+});
