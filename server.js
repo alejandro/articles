@@ -159,6 +159,6 @@ function isMember(array,path){
 }
 app.listen(process.env['app_port'] || 8080);
 console.log('Server on port: %s \non: %s ',app.address().port,app.settings.env);
-require('child_process').exec('curl -XGET http://github.com/', function(e,d){
+require('child_process').spawn('/usr/bin/curl -XGET http://github.com/', function(e,d){
     console.log(e,d)
     })
