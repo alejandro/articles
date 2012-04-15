@@ -1,0 +1,175 @@
+<h1>Una introducción a npm</h1>
+
+<div style="text-align:center">
+<img src="http://npmjs.org/npm.png" width=200 align="center">
+</div>
+
+<p>Sin duda muchos de los artículos referentes a node.js, tanto en español como en inglés, van directamente relacionados a como crear aplicaciones, como mejorar tu ritmo de trabajo, o cuan concurrente y rápido node.js es.</p>
+
+<p>Pero muy pocos se detienen a explicar o indagar un poco más acerca de una de las herramientas más importantes dentro del "workflow" de node.js: <strong>npm</strong>;</p>
+
+<blockquote>
+  <p>Contrariamente a las creencias de muchos, "npm" no es una abreviación para "Node Package Manager". - <a href="http://npmjs.org/doc/faq.html#If-npm-is-an-acronym-why-is-it-never-capitalized" title="$ npm faq">npm FAQ</a></p>
+</blockquote>
+
+<p>¿No me crees? Mira lo que dice <a href="http://en.wikipedia.org/wiki/Node_Package_Manager">wikipedia</a>. Siendo serios, y según Isaac Schlueter:</p>
+
+<blockquote>
+  <p>El proyecto "npm" es nombrado luego de la utilidad de la linea de comandos, la cual fue <em>organicamente</em> selecionada para ser fácilmente escrita por un programador de mano derecha usando un teclado US QWERTY, terminando con el dedo del anillo derecho en una posición para escribir <code>-</code> seguido de parámetros o "flags". Esta utilidad de linea de comandos siempre es en minúsculas... - <a href="http://npmjs.org/doc/faq.html#If-npm-is-an-acronym-why-is-it-never-capitalized" title="$ npm faq">npm  FAQ</a></p>
+</blockquote>
+
+<p>A pesar de la complicada e interesante descripción del origen de "npm", definitivamente <em>npm</em> es el director de la orquesta cuando se refiere a el manejo de dependencias o módulos en node.js, sus uso más comunenes son para: </p>
+
+<ul>
+<li>Publicar</li>
+<li>Descubrir</li>
+<li>Instalar y</li>
+<li>Desarrollar programas en node </li>
+</ul>
+
+<p>Es la herramienta perfecta y necesaria en cuando a manejo de dependencias se refiere.</p>
+
+<h3>Instalación</h3>
+
+<p>Desde la versión 0.6.3 npm se instala automáticamente al momento del proceso de instalación de node.js, así que no tienes que instalarlo aparte. Si todavía estas en una versión menor a esta, considera en actualizar o trabaja con un administrador de versiones como <a href="http://github.com/visionmedia/n"><code>n</code></a> ó <a href="https://github.com/isaacs/nvm"><code>nvm</code></a>, los cuales te permiten tener instaladas múltiples versiones de node en tu maquina de desarrollo, muy útil si trabajas en diferentes proyectos o modulos.</p>
+
+<h3>Aspectos que te ayudaran a entender mejor npm</h3>
+
+<p>A continuación en listaré una serie de comandos que son muy útiles y que posiblemente tu desconozcas:</p>
+
+<p>Para acceder a cada uno de ellos simplemente haz en tu linea de comandos:<code>npm &lt;comando&gt;</code>.</p>
+
+<h4><code>npm init</code>:</h4>
+
+<p>Sin duda mi favorita, como has de haber pensado, esta utilidad te permite crear, modificar y generar un <code>package.json</code> válido. Su uso es estrictamente para agregar y no borrar elementos en tu archivo. Su funcionamiento es através de una serie de preguntas. Simple de usar.</p>
+
+<h4><code>npm search &lt;nombre-del-modulo|palabra-clave&gt;</code>:</h4>
+
+<p>Te permite buscar en el registro de npm, algun modulo acerca de la palabra clave que tu seleccionaste. Si bien npm tiene muchas cosas que lo podrían hacer perfecto, este aspecto es un poco "delicado" y "complicado". Hay ciertos sitios web que hacen un poco mejor el trabajo de <a href="http://search.npmjs.org">search.npmjs.org</a> o te ofrecen una serie de herramientas y recursos, para hacer de esto un proceso menos doloroso, tales herramientas son:</p>
+
+<ul>
+<li><a href="http://startic.kr/njs/">Node Package browser</a> : muy útil para buscar readme's de modulos, además tiene la opción de crear stacks y mucho más.</li>
+<li><a href="http://eirikb.github.com/nipster/#">Nipster</a>: npm + github = El ranking perfecto. Esta herramienta te ayuda escoger el mejor modulo a usar basándose en la popularidad del modulo en github.</li>
+<li><a href="http://toolbox.no.de/">Toolbox</a>: Busqueda avanzada de módulos.</li>
+</ul>
+
+<h4><code>npm info &lt;nombre-del-modulo&gt;</code></h4>
+
+<p>Muestra información en formato <code>json</code> acerca de <code>&lt;nombre-del-modulo&gt;</code>, útil cuando quieres saber versión actual y demás detalles acerca de un módulo:</p>
+
+<pre><code>&gt; npm info express
+&gt; npm info kronos
+&gt; npm info &lt;package-name&gt;
+</code></pre>
+
+<h4><code>npm ls</code>, <code>npm la</code>, <code>npm ll</code>, <code>npm list</code></h4>
+
+<p>Lista los paquetes que tienes actualmente instalados en un determinado directorio. En formato de <code>tree</code>:</p>
+
+<pre><code>bolt@0.1.2 /home/alejandromg/dev/bolt
+└─┬ bolt@0.3.2 
+  ├── colors@0.6.0-1 
+  ├── eventemitter2@0.4.8 
+  └── redis@0.7.1 
+</code></pre>
+
+<h4><code>npm outdated</code></h4>
+
+<p>Su nombre es más que explicativo, busca si hay versiones más nuevas acerca de los modulos instalados en el directorio actual.</p>
+
+<p>Genera algo como:</p>
+
+<pre><code>node-watcher@0.0.3 ./node_modules/node-watcher current=0.0.2
+request@2.9.202 ./node_modules/request current=2.9.153
+nano@2.1.0 ./node_modules/nano current=1.3.0
+</code></pre>
+
+<p>Por lo tanto un <code>npm update</code> o  <code>npm up</code> es necesario, pero antes asegúrate que tu actualización no vaya a crear errores por <a href="http://semver.org">nueva API o nuevos métodos</a>.</p>
+
+<h4><code>npm link</code>:</h4>
+
+<p>Sin duda una de las herramientas más útiles y más controversiales. Por diseño, npm no va instalar una sola versión de un módulo "x" en tu computador, en cambio va a instalarlo y hacerlo disponible solo en el directorio en el que ejecutaste: <code>npm install mi-modulo</code>.</p>
+
+<p>Por ejemplo: <strong>express</strong>.</p>
+
+<p>Para instalarlo haces: <code>npm install -g express</code>, con esto tienes la utilidad de linea de comandos para poder luego hacer:</p>
+
+<p><code>express misuperapp</code></p>
+
+<p>Lo cual te va a generar algo como:</p>
+
+<pre><code>create : misuperapp
+...blah blah
+
+dont forget to install dependencies:
+$ cd misuperapp &amp;&amp; npm install
+</code></pre>
+
+<p>Luego de hacer <code>cd misuperapp</code>, necesitas instalar las dependencias, pero que sucede si no tienes acceso a internet en ese momento o no quieres volver a descargar express, en este caso puedes hacer <code>npm link express</code>, para crear un link simbólico a la versión global de express:</p>
+
+<pre><code>$ cd misuperapp &amp;&amp; npm link express
+./node_modules/express -&gt; /usr/local/lib/node_modules/express
+</code></pre>
+
+<p>Con esto ya tienes la habilidad de usar la versión global de express sin necesidad de descargarla de nuevo. </p>
+
+<p><strong>Importante</strong>: Como dije anteriormente, por diseño, cuando haces <code>npm install</code> npm instala una copia local en <code>misuperapp</code>, lo cual es lo mejor, ya que te ayuda a mantener un control mejor de dependencias y debugabilidad. Además un par de KB en tu disco duro no hacen mal. Por lo tanto, aunque sea útil, no es una práctica recomendada.</p>
+
+<p>¿Pero, y entonces para que la mencionas? Pues aparte de la utilidad mencionada anteriormente, hay una aun más importante, pero un poco más complicada de explicar y especifica para aquellos que escriben módulos, ya que atraves de <code>npm link</code> puedes crear una referencia global al módulo que escribes y hacer pruebas con tus dependencias. Esto esta mucho mejor explicado mejor en <a href="http://www.devthought.com/2012/02/17/npm-tricks/">npm tricks</a>.</p>
+
+<p>Para terminar con <code>npm link</code>, como bien diría Isaacs en #node.js :</p>
+
+<blockquote>
+  <p>"En producción, tu VM puede estar limitada a un servicio, o espacio en disco, en este caso, <code>npm link</code> no es tan malo. Pero por el amor a la debugabilidad y alta disponibilidad, no lo hagas en otros escenarios, por que symlinks son dolorosos en producción..." - <a href="http://irclogger.com/.Node.js/2012-04-15#1334525048">Referencia</a></p>
+</blockquote>
+
+<p>El contrario a <code>npm link</code> es <code>npm unlink</code>.</p>
+
+<h4><code>npm shirnkwrap</code></h4>
+
+<p>A diferencia de <code>npm link</code>, shrinkwrap es una herramienta con más utilidad para aquellos que desarrollan módulos, en pocas palabras shirnkwrap "bloquea" las versiones que utilizas en determinada aplicación, de esta manera te aseguras que las versiones que van a ser posteriormente instaladas en la cadena de distribución sean las mismas que utilizaste en el desarrollo de tu módulo o aplicación. Este comando generara un nuevo archivo donde estara el <code>árbol</code> o esquema con las versiones que deben ser instaladas al momento de instalar tu módulo. <a href="http://npmjs.org/doc/shrinkwrap.html">Más información</a></p>
+
+<p>Y muchos más:</p>
+
+<ul>
+<li><code>npm home &lt;modulo&gt;</code>: Muestra el sitio web del módulo, si existe.</li>
+<li><code>npm prune</code>, <code>npm rm</code>: <code>prune</code> elimina paquetes que no se encuentran en el package.json pero si en el folder <code>node_modules</code>, a diferencia de <code>rm</code> que elimina el modulo que pasas como parámetro e.g: <code>npm rm express</code></li>
+<li><code>npm help folders</code>: Explica como funciona la instalación de módulos, muy interesante.</li>
+<li><code>npm view &lt;módulo&gt; &lt;detalle&gt;</code>, <code>npm show</code>: Muestra información especifica acerca de <módulo>, por ejemplo: <code>npm view nhouston author</code> va a mostrar "Alejandro Morales &lt;mi_correo@electronico.com&gt;", detalle puede ser cualquiera de los campos del <code>package.json</code></li>
+<li><code>npm config list</code>: muestra la configuración que esta siendo utilizada por npm.</li>
+<li><code>npm help</code>: muestra toda la ayuda referente a npm.</li>
+<li><code>npm faq</code>: Preguntas Frecuentes</li>
+<li>...</li>
+</ul>
+
+<h2>En conclusión</h2>
+
+<p><strong>npm</strong> es perfecto, si, es una conclusión ;). Claro existen "ciertos" y pocos problemas, pero para un usuario <em>"regular"</em> no deberían ser un problema. Son cosas <em>low-level</em>. Y que a la mayoría de nosotros no nos va tocar enfrentar.</p>
+
+<p>Por cierto, he tomado <em>oficialmente</em> responsabilidad en la traducción de la documentación de npm al español, así que si quieres ayudar <a href="http://github.com/alejandromg/npm" title="Fork">clona mi fork</a> y mandame tus cambios por github, de esa manera podemos generar más información en español.</p>
+
+<h4>No te gusta npm</h4>
+
+<p>¿En serio no te gusta? npm es la navaja suiza en cuanto a "package-managers" del mundo de la programación, no solo eso te brinda un sin número de beneficios además el gran soporte por parte de la comunidad en general, lo hacen el más seguro y confiable. ¿No te convencí? Bueno, existen otros package-managers para node.js como:</p>
+
+<ul>
+<li><a href="http://ender.no.de/">Ender</a>: La hermana pequeña de npm, especializado para manejar paquetes para el navegador.</li>
+<li><a href="https://github.com/wearefractal/npkg">npkg</a>: genera instaladores multiplataforma de aplicaciones escritas con node.js. Se mira interesante.</li>
+<li><a href="https://github.com/jeromeetienne/nmod">nmod</a>: nmod es un administrador de node_modules.</li>
+<li><a href="https://github.com/crcn/slugr">Slugr</a> Crea programas autoejecutables escritos en node. </li>
+<li><a href="https://github.com/joyent/node/wiki/modules#wiki-package-management" title="Wiki Package-management">y la lista continua</a></li>
+</ul>
+
+<p>Particularmente no he usado ninguno así que yo te sigo recomendando npm.</p>
+
+<h3>Links Recomendados</h3>
+
+<ul>
+<li><strong><a href="http://foohack.com/2010/08/intro-to-npm/">Intro to npm</a></strong> por Isaac Schlueter (creador de npm) </li>
+<li><strong><a href="http://www.devthought.com/2012/02/17/npm-tricks/">npm tricks</a></strong> por Guillermo Rauch</li>
+<li><strong><a href="http://debuggable.com/posts/npm-an-intervention:4f44dd25-a114-4361-ada1-6cefcbdd56cb">npm an Intervention</a></strong> por Felix Geisendörfer</li>
+<li><strong><a href="http://npmjs.org/doc/faq.html#If-npm-is-an-acronym-why-is-it-never-capitalized" title="$ npm faq">npm FAQ</a></strong> (además puedes teclear en tu linea de comandos <code>npm faq</code>)</li>
+<li><strong><a href="http://blog.nodejs.org/2012/02/27/managing-node-js-dependencies-with-shrinkwrap/">npm shrinkwrap</a></strong>: manejando dependencias como un profesional.</li>
+</ul>
+
+<p>¿Encontraste algún error? Manda tus cambios via <a href="http://github.com/alejandromg/articles/tree/master/posts/abr2012/02">Pull Request</a> ;)</p>
