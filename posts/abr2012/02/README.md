@@ -1,8 +1,7 @@
 # Una introducción a npm
 
-<div style="text-align:center">
-<img src="http://npmjs.org/npm.png" width=200 align="center">
-</div>
+
+ <img src="http://npmjs.org/npm.png" width=200 align="center">
 
 Sin duda muchos de los artículos referentes a node.js, tanto en español como en inglés, van directamente relacionados a como crear aplicaciones, como mejorar tu ritmo de trabajo, o cuan concurrente y rápido node.js es.
 
