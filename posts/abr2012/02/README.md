@@ -33,7 +33,7 @@ A continuación en listaré una serie de comandos que son muy útiles y que posi
 Para acceder a cada uno de ellos simplemente haz en tu linea de comandos:`npm <comando>`.
 
 #### `npm init`: 
-Sin duda mi favorita, como has de haber pensado, esta utilidad te permite crear, modificar y generar un `package.json` válido. Su uso es estrictamente para agregar y no borrar elementos en tu archivo. Su funcionamiento es através de una serie de preguntas. Simple de usar.
+Sin duda mi favorita, como has de haber pensado, esta utilidad te permite crear, modificar y generar un `package.json` válido. Su uso es estrictamente para agregar y no borrar elementos en tu archivo. Su funcionamiento es através de una serie de preguntas. Simple de usar. ¿Necesitas de una aplicación más especializada? [Grunt.js](https://github.com/cowboy/grunt) es tu amigo
 
 #### `npm search <nombre-del-modulo|palabra-clave>`: 
 
