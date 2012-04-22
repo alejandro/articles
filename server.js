@@ -65,9 +65,18 @@ app.get('/myip',function(req,res){
     console.log(req.connection.remoteAddress|| '')
     console.log(req.socket.remoteAddress|| '')
     console.log(req.headers['x-real-ip'] || '')
+
+var getIp = function (req) {
+  return {
+    ip: ( req.headers["X-Forwarded-For"]
+      || req.headers["x-forwarded-for"]
+      || req.client.remoteAddress )
+  };
+};
+
     if (req.headers["x-real-ip"]) ip =req.headers["x-real-ip"];
     console.log(ip)
-    res.end(ip)
+    res.end(getIp(req));
 })
 var months = function(){
   return fs.readdirSync(path.join(__dirname,'/posts'));
