@@ -2,7 +2,7 @@
 
 Hoy fue publicada la primera versión estable de la familia `0.8.x` y sencillamente no podría ser mejor.
 
-Si no has leido el blog post acerca de todo lo nuevo [léelo aquí](blog.nodejs.org/2012/06/25/node-v0-8-0/).
+Si no has leido el blog post acerca de todo lo nuevo [léelo aquí](http://blog.nodejs.org/2012/06/25/node-v0-8-0/).
 
 ## ¿Versiones?
 ¿Porque tanta bulla con esta versión? Te has de preguntar. Node utiliza un [versionamiento semántico](http://semver.org) muy útil y fácil. En cortas palabras las versiones menores pares, osea 0.4.x,0.6.x,0.8.x son las listas para producción y uso público. En cambio las impares (0.7.x) son simplemente para ir implementando las cosas nuevas que se vienen en el software. En este caso node.js. Así que esta versión trae muchas cosas listas para que tu las uses directamente en producción.
