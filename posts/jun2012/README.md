@@ -94,9 +94,9 @@ Te invito a que [leas más de este protocolo](http://www.chromium.org/spdy) ya q
 
 Hay otras cosas pequeñas que se han agregado en el transcurso de las versiones 0.7.x y 0.6.x, entre ellas:
 
-- `[os.networkInterfaces()](http://nodejs.org/api/os.html#os_os_networkinterfaces)` // su nombre es bien descriptivo ;)
+- [`os.networkInterfaces()`](http://nodejs.org/api/os.html#os_os_networkinterfaces) // su nombre es bien descriptivo ;)
 - `process._getActiveHandles()` y `process._getActiveRequests()` muy útil para hacer debug de leaks en el loop de eventos.
-- `[process.hrtime()](http://nodejs.org/api/process.html#process_process_hrtime)` te ayuda a crear benchmarks más precisos usando nanosegundos.
+- [`process.hrtime()`](http://nodejs.org/api/process.html#process_process_hrtime) te ayuda a crear benchmarks más precisos usando nanosegundos.
 
 ### Sistema de compilación
 
