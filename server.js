@@ -47,16 +47,6 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
-app.dynamicHelpers({
-  message: function(req){
-    var err = req.session.error
-      , msg = req.session.success;
-    delete req.session.error;
-    delete req.session.success;
-    if (err) return '<p class="msg error">' + err + '</p>';
-    if (msg) return '<p class="msg success">' + msg + '</p>';
-  }
-});
 
 app.get('/', function(req, res){
   res.writeHeader(200,{'Content-type':'text/html'});
