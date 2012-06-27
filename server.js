@@ -102,6 +102,7 @@ app.get('/posts/:year/:month/:id.json', function(req,res){
   try {
     var pack = require(path.join(__dirname,'posts',re,id,'post.json'));
     pack.initiator = [year,m,id].join('/');
+    pack.url = '/posts/'+ pack.initiator;
     res.json(pack)
   } catch (e){ 
     res.json({status:'not found'},404);
