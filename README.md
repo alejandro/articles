@@ -4,6 +4,11 @@ Repositorio con mis artículos, post, notas, etc... En constante cambio, algunos
 
 La mayoria están escritos para [NodeHispano](http://nodehispano.com), otros para mi [blog](http://alejandromorales.co.cc).
 
+### WARNING
+
+El servidor es un desastre, esta lleno de malas prácticas y no esta optimizado. Pero hace su trabajo. NO recomiendo que utilices este repositorio como base para aprender.
+
+Estais advertido.
 
 # Author
 

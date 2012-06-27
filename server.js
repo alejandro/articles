@@ -1,13 +1,33 @@
-var express = require('express'),
-    crypto = require('crypto'),
-    url = require('url'),
-    sys = require('util'),
-    app = module.exports =  express.createServer(),
-    groups =[];
-    var fs = require('fs');
-    var path = require('path');
-    var ghm = require('github-flavored-markdown');
-/* A little hack for correct handle of session */
+
+var fs = require('fs')
+  , path    = require('path')
+  , ghm     = require('github-flavored-markdown')
+  , express = require('express')
+  , crypto  = require('crypto')
+  , url     = require('url')
+  , sys     = require('util')
+  , app     = module.exports =  express.createServer()
+  , groups  = []
+  ;
+
+var shortMonths = {
+  'ene':'enero',
+  'feb':'febrero',
+  'mar':'marzo',
+  'abr':'abril',
+  'may':'mayo',
+  'jun':'junio',
+  'jul':'julio',
+  'ago':'agosto',
+  'sep':'septiembre',
+  'oct':'octubre',
+  'nov':'noviembre',
+  'dic':'diciembre'
+};   
+
+var months = function(){
+  return fs.readdirSync(path.join(__dirname,'/posts'));
+};
   
 app.configure(function(){
   app.set('views',__dirname+ '/views');
@@ -18,6 +38,7 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.bodyParser());
 });
+
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
 });
@@ -25,6 +46,7 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
+
 app.dynamicHelpers({
   message: function(req){
     var err = req.session.error
@@ -45,21 +67,28 @@ app.get('/', function(req, res){
   res.write('<body>')
   res.write('<article class="markdown-body">')
   res.write('<h1>Hola los articulos disponibles son:</h1><ul><li>');
-  res.write(months().map(function(month){
+  res.write(months().sort().map(function(month){
             var _data = '';
-            var posts =fs.readdirSync(path.join(__dirname,'posts',month));
-            _data +='<ul> <h3> '+month+':</h3><li>'
+            var posts = fs.readdirSync(path.join(__dirname,'posts',month));
+            
+            _data += '<ul> <h3> '+ month +':</h3><li>'
+
             var s = posts.map(function(v){
-              return '<a href="/posts/'+parseInt(month.substr(-4))+'/'+month.substr(0,3)+'/'+v+ '">'+ v+'</a>';
+              var ref = parseInt(month.substr(-4), 10)+'/'+month.substr(0,3)+'/'+v ;
+              return '<a data-post="' + ref + '" class="post" href="/posts/'+ref+ '">'+ v +'</a>';
             }).join('</li><li>')
+
             _data += s;
             _data +='</li> </ul>'
             return _data;
           }).join('</li><li>'));
   res.write('</article>')
   res.write('<footer>Archive made by <a href="//alejandromorales.co.cc">Alejandro Morales</a></footer>')
+  res.write('<script src="/javascripts/app.js"></script>');
   res.end('</body></html>');
 });
+
+
 app.get('/myip',function(req,res){
     var getIp = function (req) {
       return {
@@ -71,25 +100,24 @@ app.get('/myip',function(req,res){
     };
     console.log(getIp(req))
     res.end(JSON.stringify(getIp(req)))
+});
 
-})
-var months = function(){
-  return fs.readdirSync(path.join(__dirname,'/posts'));
-};
-var shortMonths = {
-  'ene':'enero',
-  'feb':'febrero',
-  'mar':'marzo',
-  'abr':'abril',
-  'may':'mayo',
-  'jun':'junio',
-  'jul':'julio',
-  'ago':'agosto',
-  'sep':'septiembre',
-  'oct':'octubre',
-  'nov':'noviembre',
-  'dic':'diciembre'
-}
+
+
+app.get('/posts/:year/:month/:id.json', function(req,res){
+  var year = req.params.year;
+  var m = req.params.month;
+  var id = req.params.id;
+  var re = m + year;
+  try {
+    var pack = require(path.join(__dirname,'posts',re,id,'post.json'));
+    pack.initiator = [year,m,id].join('/');
+    res.json(pack)
+  } catch (e){ 
+    res.json({status:'not found'},404);
+  }
+});
+
 app.get('/posts/:year/:month/:id',function(req,res){
   var year = req.params.year;
   var m = req.params.month;
@@ -119,6 +147,7 @@ app.get('/posts/:year/:month/:id',function(req,res){
         res.write('</article>')
         res.write('<p style="text-align:center"> Did you find a typo? Send a <a href="//github.com/alejandromg/articles/tree/master/posts/'+re+'/'+id+'"> Pull request</a></p>')
         res.write('<footer>Archive made by <a href="//alejandromorales.co.cc">Alejandro Morales</a></footer>')
+        res.write('<script src="/javascripts/app.js"></script>');
   res.end('</body></html>');
         res.end();
       }
@@ -131,9 +160,11 @@ app.get('/posts/:year/:month/:id',function(req,res){
     });
   }
 });
+
 app.get('/login', function(req, res){
   res.render(__dirname+'/posts/mar2012/01/index.html')
 });
+
 // Regresa el index num de un valor en una array como el de un 
 // objeto objeto["VALOR"] -> array[indexOf(array,VALOR)]
 function indexOf(array, value){
@@ -149,6 +180,7 @@ function indexOf(array, value){
   });    
   return f;
 }
+
 // Una array es miembro 
 function isMember(array,path){
   var i = 0,f=-1;
@@ -161,10 +193,10 @@ function isMember(array,path){
   });
   return f;
 }
-app.listen(process.env['app_port'] || 8080);
-console.log('Server on port: %s \non: %s ',app.address().port,app.settings.env);
 
-var curl = require('child_process').exec('which curl', function(e,d){
-  console.log(e,d)
-})
+app.listen(process.env['app_port'] || 8080, function (){
+  console.log('Server on port: %s \non: %s ',this.address().port,app.settings.env);  
+});
+
+
 
