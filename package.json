@@ -1,6 +1,6 @@
 {
     "name": "Articles",
-    "node":"0.6.17",
+    "node":"0.8.1",
     "description": "This is the server for read the articles upon my db",
     "version": "0.1.0",
     "author": "Alejandro Morales",
