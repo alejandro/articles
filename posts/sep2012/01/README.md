@@ -237,7 +237,7 @@ assert.equal(punto.distancia, 4.47213595499958)
 
 **Nota**
 
-Tu puedes correr el código con sinta es6 simplemente instalando [`six`](https://github.com/matthewrobb/six) (`npm install -g six`) 
+Tu puedes correr el código con sintáx es6 simplemente instalando [`six`](https://github.com/matthewrobb/six) (`npm install -g six`) y luego: `six script.js` y listo.
 
 
 
