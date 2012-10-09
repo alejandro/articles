@@ -1,5 +1,5 @@
-# ES6 y Clases: Reescribiendo tus funciones
--------------------------------------------
+# ES6 y Clases
+--------------
 
 No hace mucho, se publicó un nuevo spec de ECMAScript,(ES6), con muchas cosas nuevas y otras todavia en debate. Pero sin duda hay algunas que llma mucho la atención.
 
